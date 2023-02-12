@@ -1,1 +1,1 @@
-<h1>ValorantTracker UI</h1>
+<h1>Welcome to Anita's Video Labeling Project (Official Name TBD)</h1>
