@@ -13,23 +13,23 @@
 				{#if columnHeading === '_icon'}
 					<th />
 				{:else}
-					<th class="text-md">{columnHeading}</th>
+					<th class="text-md font-semibold border-collapse">{columnHeading}</th>
 				{/if}
 			{/each}
 		</tr><tr />
 	</thead>
 	<tbody>
 		{#each Object.values(tableData) as row}
-			<tr class="hover:bg-gray-200">
+			<tr class="hover:bg-gray-200 border-collapse">
 				{#each Object.values(row) as cell}
                     {#if cell.type === 'image'}
-                    <td class="m-px py-4 center">
+                    <td class="m-px py-4 center border-collapse">
                         <button>
                             <img class="w-4 h-4" src={cell.data} alt={cell.image_alt} />
                         </button>
                     </td>
                     {:else}
-                    <td class="m-px py-4 {alignData}">
+                    <td class="m-px py-4 border-collapse {alignData}">
                         {#if cell === status.Done}
                             <img src="green_checkmark.jpg" alt="done icon: green checkmark" />
                         {:else if cell === status.InProgress}
