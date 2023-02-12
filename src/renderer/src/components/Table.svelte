@@ -7,7 +7,7 @@
 </script>
 
 <table class="w-full border-collapse">
-	<thead class="text-left">
+	<thead class="{alignData}">
 		<tr>
 			{#each Object.keys(tableData[0]) as columnHeading}
 				{#if columnHeading === '_icon'}
@@ -31,9 +31,9 @@
                     {:else}
                     <td class="m-px py-4 border-collapse {alignData}">
                         {#if cell === status.Done}
-                            <img src="green_checkmark.jpg" alt="done icon: green checkmark" />
+                            <img class="mx-auto w-4 h-4" src="src/static/green_checkmark.jpg" alt="done icon: green checkmark" />
                         {:else if cell === status.InProgress}
-                            <img src="loading.gif" alt="in progress icon: loading gif" />
+                            <img class="mx-auto w-4 h-4" src="src/static/loading.gif" alt="in progress icon: loading gif" />
                         {:else if cell === status.NotStarted}
                             <div />
                         {:else if cell.type === 'button'}
