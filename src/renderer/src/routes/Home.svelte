@@ -24,7 +24,7 @@
 	let alignData = 'text-left';
 </script>
 
-<div class="flex flex-col items-center w-3/4 mx-auto">
+<div class="flex flex-col items-center w-3/4 mx-auto mt-2">
     <h1 class="text-center text-xl mx-px mb-8">
         Welcome to Anita's Video Labeling Project (Official Name TBD)
     </h1>
