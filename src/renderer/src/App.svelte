@@ -9,11 +9,11 @@
 </script>
 
 <body class="h-screen bg-gray-100">
-	<div class="grid grid-rows-5">
+	<div class="grid grid-rows-8">
 		<div class="row-span-1">
 			<Navbar />
 		</div>
-		<div class="row-span-4">
+		<div>
 			<Router routes={{
 				'/': Home,
 				'/upload': Upload,
