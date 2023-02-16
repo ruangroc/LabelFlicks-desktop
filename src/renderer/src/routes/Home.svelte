@@ -33,6 +33,5 @@
         <h2 class="text-center text-lg">Create a new project</h2>
     </button>
 
-    <!-- <h2 class="text-center text-lg mx-px mb-8 w-1/3 h-8">Current Projects</h2> -->
     <Table tableData={existingProjectsMockData} alignData={alignData} />
 </div>
