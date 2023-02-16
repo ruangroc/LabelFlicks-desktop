@@ -1,5 +1,7 @@
 {
   "name": "svelte-electron-tailwind-app",
+  "author": "Anita Ruangrotsakun",
+  "description": "MS Project -- Video Labeling Electron App",
   "private": true,
   "version": "0.0.0",
   "main": "src/electron/main.js",
@@ -12,7 +14,10 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.0.0",
     "autoprefixer": "^10.4.13",
+    "concurrently": "^7.6.0",
+    "cross-env": "^7.0.3",
     "electron": "^22.0.3",
+    "electron-builder": "^23.6.0",
     "postcss": "^8.4.21",
     "svelte": "^3.54.0",
     "svelte-spa-router": "^3.3.0",
