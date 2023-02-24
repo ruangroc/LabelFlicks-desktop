@@ -1,0 +1,14 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Accept: application/json;
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true 
+Access-Control-Allow-Headers: *
+Access-Control-Allow-Methods: POST
+
+{
+  "name": "backyard-chickens",
+  "frame_extraction_rate": 2,
+  "percent_labeled": 0,
+  "video_count": 0
+}
