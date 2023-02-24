@@ -1,27 +1,19 @@
 <script>
+	import { onMount } from "svelte";
+	import { allProjects, projectsTableData } from "../store";
 	import Table from "../components/Table.svelte";
 
-	let existingProjectsMockData = [
-		{
-			"Project Name": "seattle-wildlife-project",
-			"Date Created": "June 20, 2022",
-			"Number of Videos": "6",
-			"Percent Labeled": "78%",
-		},
-		{
-			"Project Name": "olympia-state-park",
-			"Date Created": "July 3, 2022",
-			"Number of Videos": "12",
-			"Percent Labeled": "16%",
-		},
-		{
-			"Project Name": "montana-black-bears",
-			"Date Created": "May 4, 2022",
-			"Number of Videos": "46",
-			"Percent Labeled": "100%",
-		},
-	];
-	let alignData = "text-left";
+	onMount(async () => {
+		fetch("http://localhost:5000/projects")
+		.then(response => response.json())
+		.then(data => {
+			allProjects.set(data);
+		}).catch(error => {
+			console.log(error);
+		});
+	});
+
+	let alignData = "text-center";
 </script>
 
 <div class="flex flex-col items-center w-3/4 mx-auto mt-2">
@@ -33,5 +25,7 @@
 		<h2 class="text-center text-lg">Create a new project</h2>
 	</button>
 
-	<Table tableData={existingProjectsMockData} {alignData} />
+	{#if $projectsTableData.length > 0}
+	<Table tableData={$projectsTableData} {alignData} />
+	{/if}
 </div>

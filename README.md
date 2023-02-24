@@ -13,6 +13,9 @@ Build the Svelte stuff: `npm run build`
 
 Run the app: `npm run start`
 
+If running the mock server, run this command in one command line window: `node mock-server/server.js`
+Then run the app in another window.
+
 
 # Below are things from the template repo
 
