@@ -4,8 +4,10 @@
 	import Table from "../components/Table.svelte";
 	import Modal from "../components/Modal.svelte";
 
+	const server_port = import.meta.env.VITE_SERVER_PORT || 5000;
+
 	onMount(async () => {
-		fetch("http://localhost:5000/projects")
+		fetch(`http://localhost:${server_port}/projects`)
 		.then(response => response.json())
 		.then(data => {
 			allProjects.set(data);
@@ -22,7 +24,7 @@
 	let numSeconds = 1;
 
 	async function createProject(event) {
-		fetch('http://localhost:5000/projects', {
+		fetch(`http://localhost:${server_port}/projects`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
