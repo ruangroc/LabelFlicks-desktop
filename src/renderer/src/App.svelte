@@ -8,7 +8,7 @@
 	import Export from './routes/export/Export.svelte';
 </script>
 
-<body class="h-screen bg-gray-100">
+<body class="min-h-screen bg-gray-100">
 	<div class="grid grid-rows-8">
 		<div class="row-span-1">
 			<Navbar />
