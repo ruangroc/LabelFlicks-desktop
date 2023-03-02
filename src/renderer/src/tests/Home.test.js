@@ -2,6 +2,7 @@ import {rest} from 'msw';
 import {setupServer} from 'msw/node';
 import { cleanup, render, fireEvent, screen } from '@testing-library/svelte';
 import Home from "../routes/Home.svelte";
+import { expect } from 'vitest';
 
 const server_port = process.env.SERVER_PORT || 5000;
 const server = setupServer(
@@ -39,6 +40,10 @@ describe("Home.svelte", () => {
     it('mounts', () => {
         const { container } = render(Home);
         expect(container).toBeTruthy();
+        const createButton = screen.getByRole("button");
+        expect(createButton).toBeDefined();
+        const table = screen.queryAllByRole("table");
+        expect(table).toBeDefined();
     });
 });
 
