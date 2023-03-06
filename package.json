@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "dotenv": "^16.0.3",
-    "mockserver": "^3.1.1"
+    "mockserver": "^3.1.1",
+    "npm-fetch": "^0.0.9"
   }
 }
