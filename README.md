@@ -3,6 +3,8 @@
 
 ## How to build and run
 
+Make sure you have installed Node version 18.x: https://nodejs.org/en/download/
+
 Setting up the first time: `npm install`
 
 * Apparently didn't get all the dependencies the first time, also had to run: `npm install electron` and `npm install --save-dev electron-builder` and `npm install --save-dev cross-env` and `npm install --save-dev concurrently`
