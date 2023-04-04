@@ -1,31 +1,45 @@
+<script>
+	import { selectedProject } from "../store";
+	console.log($selectedProject);
+</script>
+
 <header class="shadow-md bg-white px-1">
 	<nav>
 		<div class="flex justify-center">
+			<!-- TODO: disable all but home button if there is no selected project -->
 			<button>
 				<a class="flex items-center text-sm py-4 px-6 h-12 text-gray-900 hover:bg-gray-200 transition duration-300 ease-in-out" href="/">
 					Home
 				</a>
 			</button>
-			<button>
-				<a class="flex items-center text-sm py-4 px-6 h-12 text-gray-900 hover:bg-gray-200 transition duration-300 ease-in-out" href="#/upload">
+			<button class={Object.keys($selectedProject).length == 0 ? "disabled" : "text-gray-900"}>
+				<a class="flex items-center text-sm py-4 px-6 h-12 hover:bg-gray-200 transition duration-300 ease-in-out" href="#/upload">
 					1. Upload Videos
 				</a>
 			</button>
-			<button>
-				<a class="flex items-center text-sm py-4 px-6 h-12 text-gray-900 hover:bg-gray-200 transition duration-300 ease-in-out" href="#/preprocess">
+			<button class={Object.keys($selectedProject).length == 0 ? "disabled" : "text-gray-900"}>
+				<a class="flex items-center text-sm py-4 px-6 h-12 hover:bg-gray-200 transition duration-300 ease-in-out" href="#/preprocess">
 					2. Preprocess Videos
 				</a>
 			</button>
-			<button>
-				<a class="flex items-center text-sm py-4 px-6 h-12 text-gray-900 hover:bg-gray-200 transition duration-300 ease-in-out" href="#/label">
+			<button class={Object.keys($selectedProject).length == 0 ? "disabled" : "text-gray-900"}>
+				<a class="flex items-center text-sm py-4 px-6 h-12 hover:bg-gray-200 transition duration-300 ease-in-out" href="#/label">
 					3. Label Videos
 				</a>
 			</button>
-			<button>
-				<a class="flex items-center text-sm py-4 px-6 h-12 text-gray-900 hover:bg-gray-200 transition duration-300 ease-in-out" href="#/export">
+			<button class={Object.keys($selectedProject).length == 0 ? "disabled" : "text-gray-900"}>
+				<a class="flex items-center text-sm py-4 px-6 h-12 hover:bg-gray-200 transition duration-300 ease-in-out" href="#/export">
 					4. Export Labels
 				</a>
 			</button>
 		</div>
 	</nav>
 </header>
+
+<style>
+	.disabled {
+		pointer-events: none;
+		cursor: not-allowed;
+		color: darkgray;
+	}
+</style>

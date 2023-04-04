@@ -1,8 +1,9 @@
 <script>
 	import { onMount } from "svelte";
-	import { allProjects, projectsTableData } from "../store";
+	import { allProjects, projectsTableData, selectedProject } from "../store";
 	import Table from "../components/Table.svelte";
 	import Modal from "../components/Modal.svelte";
+	import {push, pop, replace} from 'svelte-spa-router';
 
 	const server_port = import.meta.env.VITE_SERVER_PORT || 5000;
 
@@ -47,6 +48,14 @@
 			console.log(error);
 		});
 	}
+
+	function projectClicked(row) {
+		const projectName = row["Project Name"];
+		selectedProject.set($allProjects.find(project => project.name === projectName));
+		console.log("Selected project:", $selectedProject);
+		// route to the Upload Videos page
+		push("#/upload");
+	}
 </script>
 
 <div class="flex flex-col items-center w-3/4 mx-auto mt-2">
@@ -62,7 +71,7 @@
 	</button>
 
 	{#if $projectsTableData.length > 0}
-	<Table tableData={$projectsTableData} {alignData} />
+	<Table tableData={$projectsTableData} {alignData} onClick={projectClicked} />
 	{/if}
 
 	{#if showCreateProjectModal}

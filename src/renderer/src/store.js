@@ -21,3 +21,6 @@ export const projectsTableData = derived(allProjects, ($allProjects) => {
         "Frame Extraction Rate": String(project.frame_extraction_rate),
     }));
   });
+
+// Data store for the selected project
+export const selectedProject = writable({});
