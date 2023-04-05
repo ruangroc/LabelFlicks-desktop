@@ -1,24 +1,11 @@
 <script>
     import Table from "../../components/Table.svelte";
+    import { selectedProject, videosTableData } from "../../store";
 
-    let projectName = "";
-    let videosMockData = [
-        {
-            Name: "my-video-1.mp4",
-            Date: "July 12, 2022",
-            Size: "85 MB",
-        },
-        {
-            Name: "my-video-2.mp4",
-            Date: "July 12, 2022",
-            Size: "99 MB",
-        },
-        {
-            Name: "my-video-3.mp4",
-            Date: "July 12, 2022",
-            Size: "76 MB",
-        },
-    ];
+    const server_port = import.meta.env.VITE_SERVER_PORT || 5000;
+
+    let projectName = $selectedProject.name || "";
+
     let alignData = "text-left";
 </script>
 
@@ -47,18 +34,10 @@
     <div class="flex justify-start w-full my-2 py-2">
         <h1 class="text-center text-lg font-semibold">Frame Extraction Rate</h1>
         <div class="pl-4 align-center">
-            <input
-                type="number"
-                value={1}
-                class="w-8 h-8 rounded bg-gray-200 text-sm"
-            />
-            frame(s) for every
-            <input
-                type="number"
-                value={1}
-                class="w-8 h-8 rounded bg-gray-200 text-sm"
-            />
-            second(s)
+            <span class="w-8 h-8 p-2 rounded bg-gray-200 text-sm">
+                {$selectedProject.frame_extraction_rate} frame(s) per second
+            </span>
+             
         </div>
     </div>
 
@@ -70,5 +49,7 @@
             Upload a Video
         </button>
     </div>
-    <Table tableData={videosMockData} {alignData} />
+    {#if $videosTableData.length > 0}
+    <Table tableData={$videosTableData} {alignData} />
+    {/if}
 </div>

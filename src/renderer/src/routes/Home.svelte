@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from "svelte";
-	import { allProjects, projectsTableData, selectedProject } from "../store";
+	import { allProjects, projectsTableData, selectedProject, projectVideos } from "../store";
 	import Table from "../components/Table.svelte";
 	import Modal from "../components/Modal.svelte";
 	import {push, pop, replace} from 'svelte-spa-router';
@@ -52,7 +52,13 @@
 	function projectClicked(row) {
 		const projectName = row["Project Name"];
 		selectedProject.set($allProjects.find(project => project.name === projectName));
-		console.log("Selected project:", $selectedProject);
+		fetch(`http://localhost:${server_port}/projects/${$selectedProject.id}/videos`)
+		.then(response => response.json())
+		.then(data => {
+			projectVideos.set(data.videos);
+		}).catch(error => {
+			console.log(error);
+		});
 		// route to the Upload Videos page
 		push("#/upload");
 	}

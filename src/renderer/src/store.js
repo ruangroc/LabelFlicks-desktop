@@ -24,3 +24,24 @@ export const projectsTableData = derived(allProjects, ($allProjects) => {
 
 // Data store for the selected project
 export const selectedProject = writable({});
+
+// Data store for the video IDs in the selected project
+export const projectVideos = writable([]);
+
+export const videosTableData = derived(projectVideos, ($projectVideos) => {
+    // desired format = [
+	// 	{
+	// 		"Name": "my-video-1.mp4",
+	// 		"Date Uploaded": "2023-03-19",
+	// 		"Percent Labeled": "18%",
+    //      "Number of Frames": "100"
+	// 	},
+    // ...
+	// ];
+    return $projectVideos.map(video => ({
+        "Name": video.name,
+        "Date Uploaded": String(video.date_uploaded),
+        "Percent Labeled": video.percent_labeled + "%",
+        "Number of Frames": String(video.number_of_frames),
+    }));
+})
