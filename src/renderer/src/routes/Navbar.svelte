@@ -1,12 +1,10 @@
 <script>
 	import { selectedProject } from "../store";
-	console.log($selectedProject);
 </script>
 
 <header class="shadow-md bg-white px-1">
 	<nav>
 		<div class="flex justify-center">
-			<!-- TODO: disable all but home button if there is no selected project -->
 			<button>
 				<a class="flex items-center text-sm py-4 px-6 h-12 text-gray-900 hover:bg-gray-200 transition duration-300 ease-in-out" href="/">
 					Home
