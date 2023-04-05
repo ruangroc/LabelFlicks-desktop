@@ -25,7 +25,7 @@ export const projectsTableData = derived(allProjects, ($allProjects) => {
 // Data store for the selected project
 export const selectedProject = writable({});
 
-// Data store for the video IDs in the selected project
+// Data store for the videos in the selected project
 export const projectVideos = writable([]);
 
 export const videosTableData = derived(projectVideos, ($projectVideos) => {
