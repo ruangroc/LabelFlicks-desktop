@@ -18,6 +18,8 @@ Run the app: `npm run start`
 If running the mock server, run this command in one command line window: `node mock-server/server.js`
 Then run the app in another window.
 
+To run the tests, use: `npm run test`. No mock server required.
+
 If you wish to change the ports that Svelte and the backend use, create a .env file and define:
 
 * `SVELTE_PORT=<port number>`
