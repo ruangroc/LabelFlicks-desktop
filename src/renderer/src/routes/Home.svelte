@@ -3,7 +3,7 @@
 	import { allProjects, projectsTableData, selectedProject, projectVideos } from "../store";
 	import Table from "../components/Table.svelte";
 	import Modal from "../components/Modal.svelte";
-	import {push, pop, replace} from 'svelte-spa-router';
+	import { push } from 'svelte-spa-router';
 
 	const server_port = import.meta.env.VITE_SERVER_PORT || 5000;
 
@@ -81,7 +81,7 @@
 	{/if}
 
 	{#if showCreateProjectModal}
-	<Modal bind:showModal={showCreateProjectModal}>
+	<Modal>
 		<h2 slot="header">
 			Create a New Labeling Project
 		</h2>
@@ -119,7 +119,7 @@
 		
 			<button 
 				class="bg-gray-300 ml-auto p-2 rounded" 
-				on:click={() => showCreateProjectModal = false}
+				on:click={() => {showCreateProjectModal = false; projectName = ""}}
 			>
 				Cancel
 			</button>
