@@ -31,16 +31,6 @@
         />
     </div>
 
-    <div class="flex justify-start w-full my-2 py-2">
-        <h1 class="text-center text-lg font-semibold">Frame Extraction Rate</h1>
-        <div class="pl-4 align-center">
-            <span class="w-8 h-8 p-2 rounded bg-gray-200 text-sm">
-                {$selectedProject.frame_extraction_rate} frame(s) per second
-            </span>
-             
-        </div>
-    </div>
-
     <div class="flex items-center w-full my-2">
         <h1 class="text-center text-lg font-semibold">
             Videos in your project

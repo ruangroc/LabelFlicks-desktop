@@ -31,10 +31,7 @@
 				'Content-Type': 'application/json',
 				'Accept': 'application/json'
 			},
-			body: JSON.stringify({
-				"name": projectName,
-				"frame_extraction_rate": Math.round(numFrames / numSeconds),
-			})
+			body: JSON.stringify({"name": projectName})
 		})
 		.then(response => response.json())
 		.then(newProject => {
@@ -97,24 +94,6 @@
 					bind:value={projectName}
 					class="w-full h-8 rounded bg-gray-200 p-2 text-md"
 				/>
-			</div>
-		
-			<div class="flex justify-start w-full my-2 py-2">
-				<h1 class="text-center text-lg font-semibold">Frame Extraction Rate</h1>
-				<div class="pl-4 align-center">
-					<input
-						type="number"
-						bind:value={numFrames}
-						class="w-8 h-8 rounded bg-gray-200 text-sm"
-					/>
-					frame(s) for every
-					<input
-						type="number"
-						bind:value={numSeconds}
-						class="w-8 h-8 rounded bg-gray-200 text-sm"
-					/>
-					second(s)
-				</div>
 			</div>
 		
 			<button 

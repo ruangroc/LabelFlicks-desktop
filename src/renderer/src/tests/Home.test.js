@@ -14,7 +14,6 @@ const server = setupServer(
         {
           "name": "raccoon-sightings",
           "id": "f9db1507-3997-4890-b51a-283722c41b44",
-          "frame_extraction_rate": 1,
           "frames": [],
           "percent_labeled": 17,
           "videos": [],
@@ -23,7 +22,6 @@ const server = setupServer(
         {
           "name": "neighborhood-cats",
           "id": "f9db1507-3997-4890-b51a-283722c41b40",
-          "frame_extraction_rate": 2,
           "frames": [],
           "percent_labeled": 20,
           "videos": [],
