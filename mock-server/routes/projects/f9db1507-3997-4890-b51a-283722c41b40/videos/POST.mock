@@ -1,0 +1,12 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Accept: application/json;
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true 
+Access-Control-Allow-Headers: *
+Access-Control-Allow-Methods: POST
+
+{
+  "id": "f9db1507-3997-4890-b51a-283722c41b40",
+  "video_id": "f4ba3263-5a42-435c-a275-5a9551f2aa6d"
+}

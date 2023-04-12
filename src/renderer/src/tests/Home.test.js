@@ -111,7 +111,7 @@ describe("Home.svelte", () => {
 
     it('navigates to the Upload Videos page when a project is selected', async () => {
       render(Home);
-      render(Upload);
+      const { component } = render(Upload);
 
       const clickedProject = screen.getByText("raccoon-sightings");
       expect(clickedProject).toBeDefined();
@@ -133,5 +133,18 @@ describe("Home.svelte", () => {
       
       const videosTableStore = get(videosTableData);
       expect(videosTableStore.length).toEqual(1);
+
+      // Expecting clicking the Upload a Video button will make the 
+      // modal for selecting a video pop open
+      const uploadButton = screen.getByText("Upload a Video");
+      expect(uploadButton).toBeDefined();
+      await fireEvent.click(uploadButton);
+
+      // Expecting the main modal elements to be on the screen
+      const fileSelectField = screen.getByLabelText("Upload a video:");
+      expect(fileSelectField).toBeDefined();
+
+      const modalHeader = screen.getByText("Select a video to add to this project");
+      expect(modalHeader).toBeDefined();
     });
 });
