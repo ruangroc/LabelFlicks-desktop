@@ -31,10 +31,7 @@
 				'Content-Type': 'application/json',
 				'Accept': 'application/json'
 			},
-			body: JSON.stringify({
-				"name": projectName,
-				"frame_extraction_rate": Math.round(numFrames / numSeconds),
-			})
+			body: JSON.stringify({"name": projectName})
 		})
 		.then(response => response.json())
 		.then(newProject => {
@@ -70,10 +67,10 @@
 	</h1>
 
 	<button 
-		class="bg-gray-200 hover:bg-gray-300 mx-px mb-8 w-1/3 h-8"
+		class="rounded bg-green-300 hover:bg-green-400 mx-px mb-8 w-1/3"
 		on:click={() => showCreateProjectModal = true}
 	>
-		<h2 class="text-center text-lg">Create a new project</h2>
+		<h2 class="text-center text-lg p-2">Create a new project</h2>
 	</button>
 
 	{#if $projectsTableData.length > 0}
@@ -99,31 +96,13 @@
 				/>
 			</div>
 		
-			<div class="flex justify-start w-full my-2 py-2">
-				<h1 class="text-center text-lg font-semibold">Frame Extraction Rate</h1>
-				<div class="pl-4 align-center">
-					<input
-						type="number"
-						bind:value={numFrames}
-						class="w-8 h-8 rounded bg-gray-200 text-sm"
-					/>
-					frame(s) for every
-					<input
-						type="number"
-						bind:value={numSeconds}
-						class="w-8 h-8 rounded bg-gray-200 text-sm"
-					/>
-					second(s)
-				</div>
-			</div>
-		
 			<button 
-				class="bg-gray-300 ml-auto p-2 rounded" 
-				on:click={() => {showCreateProjectModal = false; projectName = ""}}
+				class="bg-gray-300 hover:bg-gray-400 ml-auto p-2 rounded" 
+				on:click={() => showCreateProjectModal = false}
 			>
 				Cancel
 			</button>
-			<button class="bg-green-300 ml-3 p-2 rounded" on:click={createProject}>
+			<button class="bg-green-300 hover:bg-green-400 ml-3 p-2 rounded" on:click={createProject}>
 				Create Project
 			</button>
 		</div>

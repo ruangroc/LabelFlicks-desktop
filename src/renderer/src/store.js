@@ -9,16 +9,14 @@ export const projectsTableData = derived(allProjects, ($allProjects) => {
 	// 	{
 	// 		"Project Name": "seattle-wildlife-project",
 	// 		"Number of Videos": "6",
-	// 		"Percent Labeled": "78%",
-    //      "Frame Extraction Rate": "1"
+	// 		"Percent Labeled": "78%"
 	// 	},
     // ...
 	// ];
     return $allProjects.map(project => ({
         "Project Name": project.name,
         "Number of Videos": String(project.video_count),
-        "Percent Labeled": project.percent_labeled + "%",
-        "Frame Extraction Rate": String(project.frame_extraction_rate),
+        "Percent Labeled": project.percent_labeled + "%"
     }));
   });
 
