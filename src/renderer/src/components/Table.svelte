@@ -4,6 +4,7 @@
 
 	export let tableData = [];
 	export let alignData = "text-left"; // can be text-left or text-center
+	export let onClick = () => {};
 </script>
 
 <table class="w-full border-collapse">
@@ -22,7 +23,7 @@
 	</thead>
 	<tbody>
 		{#each Object.values(tableData) as row}
-			<tr class="hover:bg-gray-200 border-collapse">
+			<tr class="hover:bg-gray-200 border-collapse" on:click={onClick(row)}>
 				{#each Object.values(row) as cell}
 					{#if cell.type === "image"}
 						<td class="m-px py-4 center border-collapse">

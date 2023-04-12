@@ -1,8 +1,9 @@
 <script>
 	import { onMount } from "svelte";
-	import { allProjects, projectsTableData } from "../store";
+	import { allProjects, projectsTableData, selectedProject, projectVideos } from "../store";
 	import Table from "../components/Table.svelte";
 	import Modal from "../components/Modal.svelte";
+	import { push } from 'svelte-spa-router';
 
 	const server_port = import.meta.env.VITE_SERVER_PORT || 5000;
 
@@ -47,6 +48,20 @@
 			console.log(error);
 		});
 	}
+
+	function projectClicked(row) {
+		const projectName = row["Project Name"];
+		selectedProject.set($allProjects.find(project => project.name === projectName));
+		fetch(`http://localhost:${server_port}/projects/${$selectedProject.id}/videos`)
+		.then(response => response.json())
+		.then(data => {
+			projectVideos.set(data.videos);
+		}).catch(error => {
+			console.log(error);
+		});
+		// route to the Upload Videos page
+		push("#/upload");
+	}
 </script>
 
 <div class="flex flex-col items-center w-3/4 mx-auto mt-2">
@@ -62,11 +77,11 @@
 	</button>
 
 	{#if $projectsTableData.length > 0}
-	<Table tableData={$projectsTableData} {alignData} />
+	<Table tableData={$projectsTableData} {alignData} onClick={projectClicked} />
 	{/if}
 
 	{#if showCreateProjectModal}
-	<Modal bind:showModal={showCreateProjectModal}>
+	<Modal>
 		<h2 slot="header">
 			Create a New Labeling Project
 		</h2>
@@ -104,7 +119,7 @@
 		
 			<button 
 				class="bg-gray-300 ml-auto p-2 rounded" 
-				on:click={() => showCreateProjectModal = false}
+				on:click={() => {showCreateProjectModal = false; projectName = ""}}
 			>
 				Cancel
 			</button>

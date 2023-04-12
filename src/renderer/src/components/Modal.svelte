@@ -1,11 +1,15 @@
 <!-- Reference: https://svelte.dev/examples/modal -->
 
 <script>
-	export let showModal; // boolean
-
 	let dialog; // HTMLDialogElement
 
-	$: if (dialog && showModal) dialog.showModal();
+	// Dialog must be shown for it to appear on the Electron app
+	// but the testing framework doesn't recognize showModal() as
+	// a function so the try-catch block is here to handle that
+	$: if (dialog) {
+		try { dialog.showModal(); } 
+		catch { console.log("unable to show modal"); }
+	}
 </script>
 
 <dialog bind:this={dialog}>

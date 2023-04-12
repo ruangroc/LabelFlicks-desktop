@@ -1,0 +1,20 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Accept: application/json;
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true 
+Access-Control-Allow-Headers: *
+
+{
+  "project_id": "f9db1507-3997-4890-b51a-283722c41b44",
+  "videos": [
+    {
+      "name": "raccoon-cam.mp4",
+      "project_id": "f9db1507-3997-4890-b51a-283722c41b44",
+      "id": "f4ba3263-5a42-435c-a275-5a9551f2aa6d",
+      "date_uploaded": "2023-03-19",
+      "percent_labeled": 0,
+      "number_of_frames": 0
+    }
+  ]
+}
