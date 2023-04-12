@@ -111,7 +111,7 @@ describe("Home.svelte", () => {
 
     it('navigates to the Upload Videos page when a project is selected', async () => {
       render(Home);
-      const { component } = render(Upload);
+      render(Upload);
 
       const clickedProject = screen.getByText("raccoon-sightings");
       expect(clickedProject).toBeDefined();
