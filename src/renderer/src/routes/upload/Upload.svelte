@@ -1,12 +1,40 @@
 <script>
     import Table from "../../components/Table.svelte";
-    import { selectedProject, videosTableData } from "../../store";
+    import Modal from "../../components/Modal.svelte";
+    import { selectedProject, videosTableData, projectVideos } from "../../store";
+    import { Stretch } from 'svelte-loading-spinners';
 
     const server_port = import.meta.env.VITE_SERVER_PORT || 5000;
 
     let projectName = $selectedProject.name || "";
 
     let alignData = "text-left";
+
+    let showUploadVideoModal = false;
+    let selectedVideo;
+    let showLoadingSymbol = false;
+
+    async function uploadVideos() {
+        showUploadVideoModal = false;
+
+        // Note that files are of type `FileList`, not an Array:
+		// https://developer.mozilla.org/en-US/docs/Web/API/FileList
+        // Must put the 0th FileList item into the FormData object
+        const formData = new FormData();
+        formData.append('video', selectedVideo[0]);
+        showLoadingSymbol = true;
+
+        let uploadResponse = await fetch(`http://localhost:${server_port}/projects/${$selectedProject.id}/videos`, {
+			method: 'POST',
+			body: formData
+		});
+        let uploadData = await uploadResponse.json();
+
+        let refreshResponse = await fetch(`http://localhost:${server_port}/projects/${$selectedProject.id}/videos`);
+        let refreshData = await refreshResponse.json();
+        projectVideos.set(refreshData.videos);
+        showLoadingSymbol = false;
+    }
 </script>
 
 <div class="flex flex-col items-center w-3/4 mx-auto mt-2">
@@ -35,11 +63,50 @@
         <h1 class="text-center text-lg font-semibold">
             Videos in your project
         </h1>
-        <button class="ml-auto bg-gray-300 p-2 rounded">
+        <button 
+            class="ml-auto bg-gray-300 p-2 rounded" 
+            on:click={() => showUploadVideoModal = true}
+        >
             Upload a Video
         </button>
     </div>
+
+    {#if showUploadVideoModal}
+	<Modal>
+		<h2 slot="header">
+			Select a video to add to this project
+		</h2>
+	
+		<div slot="body">
+			<div class="flex flex-col w-full justify-start mb-2 py-4">
+				<label for="video-select">Upload a video:</label>
+                <input
+                    accept="video/mp4"
+                    bind:files={selectedVideo}
+                    type="file"
+                    class="py-4"
+                    id="video-select"
+                />
+			</div>
+		
+			<button 
+				class="bg-gray-300 hover:bg-gray-400 ml-auto p-2 rounded" 
+				on:click={() => showUploadVideoModal = false}
+			>
+				Cancel
+			</button>
+			<button class="bg-green-300 hover:bg-green-400 ml-3 p-2 rounded" on:click={uploadVideos}>
+				Upload
+			</button>
+		</div>
+	</Modal>
+	{/if}
+
     {#if $videosTableData.length > 0}
-    <Table tableData={$videosTableData} {alignData} />
+        {#if showLoadingSymbol}
+            <Stretch size="60" color="#FF3E00" unit="px" duration="1s" />
+        {:else}
+            <Table tableData={$videosTableData} {alignData} />
+        {/if}
     {/if}
 </div>

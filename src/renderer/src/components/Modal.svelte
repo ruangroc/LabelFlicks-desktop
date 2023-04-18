@@ -12,18 +12,17 @@
 	}
 </script>
 
-<dialog bind:this={dialog}>
+<dialog bind:this={dialog} class="w-full">
 	<div>
 		<slot name="header" />
 		<hr />
 		<slot name="body" />
-		<hr />
 	</div>
 </dialog>
 
 <style>
 	dialog {
-		max-width: 32em;
+		max-width: 36em;
 		border-radius: 0.2em;
 		border: none;
 		padding: 0;
