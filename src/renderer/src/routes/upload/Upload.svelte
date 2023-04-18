@@ -2,7 +2,7 @@
     import Table from "../../components/Table.svelte";
     import Modal from "../../components/Modal.svelte";
     import { selectedProject, videosTableData, projectVideos } from "../../store";
-    import { Jumper } from 'svelte-loading-spinners';
+    import { Stretch } from 'svelte-loading-spinners';
 
     const server_port = import.meta.env.VITE_SERVER_PORT || 5000;
 
@@ -104,7 +104,7 @@
 
     {#if $videosTableData.length > 0}
         {#if showLoadingSymbol}
-            <Jumper size="60" color="#FF3E00" unit="px" duration="1s" />
+            <Stretch size="60" color="#FF3E00" unit="px" duration="1s" />
         {:else}
             <Table tableData={$videosTableData} {alignData} />
         {/if}
