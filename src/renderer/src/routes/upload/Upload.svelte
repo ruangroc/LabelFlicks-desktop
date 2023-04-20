@@ -1,10 +1,9 @@
 <script>
     import Table from "../../components/Table.svelte";
     import Modal from "../../components/Modal.svelte";
-    import { selectedProject, videosTableData, projectVideos } from "../../store";
     import { Stretch } from 'svelte-loading-spinners';
-
-    const server_port = import.meta.env.VITE_SERVER_PORT || 5000;
+    import { selectedProject } from "../../stores/projects";
+	import { videosTableData, fetchVideos, uploadVideo } from "../../stores/videos";
 
     let projectName = $selectedProject.name || "";
 
@@ -24,15 +23,18 @@
         formData.append('video', selectedVideo[0]);
         showLoadingSymbol = true;
 
-        let uploadResponse = await fetch(`http://localhost:${server_port}/projects/${$selectedProject.id}/videos`, {
-			method: 'POST',
-			body: formData
-		});
-        let uploadData = await uploadResponse.json();
+        await uploadVideo($selectedProject.id, formData);
 
-        let refreshResponse = await fetch(`http://localhost:${server_port}/projects/${$selectedProject.id}/videos`);
-        let refreshData = await refreshResponse.json();
-        projectVideos.set(refreshData.videos);
+        // let uploadResponse = await fetch(`http://localhost:${server_port}/projects/${$selectedProject.id}/videos`, {
+		// 	method: 'POST',
+		// 	body: formData
+		// });
+        // let uploadData = await uploadResponse.json();
+
+        // let refreshResponse = await fetch(`http://localhost:${server_port}/projects/${$selectedProject.id}/videos`);
+        // let refreshData = await refreshResponse.json();
+        // projectVideos.set(refreshData.videos);
+        await fetchVideos($selectedProject.id);
         showLoadingSymbol = false;
     }
 </script>

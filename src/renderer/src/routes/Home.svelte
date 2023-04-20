@@ -1,62 +1,30 @@
 <script>
 	import { onMount } from "svelte";
-	import { allProjects, projectsTableData, selectedProject, projectVideos } from "../store";
 	import Table from "../components/Table.svelte";
 	import Modal from "../components/Modal.svelte";
 	import { push } from 'svelte-spa-router';
+	import { selectedProject, allProjects, projectsTableData, fetchProjects, createNewProject } from "../stores/projects";
+	import { fetchVideos } from "../stores/videos";
 
-	const server_port = import.meta.env.VITE_SERVER_PORT || 5000;
-
-	onMount(async () => {
-		fetch(`http://localhost:${server_port}/projects`)
-		.then(response => response.json())
-		.then(data => {
-			allProjects.set(data);
-		}).catch(error => {
-			console.log(error);
-		});
-	});
+	onMount(fetchProjects);
 
 	let alignData = "text-center";
 
 	let showCreateProjectModal = false;
 	let projectName = "";
-	let numFrames = 1;
-	let numSeconds = 1;
 
 	async function createProject(event) {
-		fetch(`http://localhost:${server_port}/projects`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'Accept': 'application/json'
-			},
-			body: JSON.stringify({"name": projectName})
-		})
-		.then(response => response.json())
-		.then(newProject => {
-			console.log(newProject);
-			$allProjects = [...$allProjects, newProject];
-			showCreateProjectModal = false;
-			projectName = "";
-			numFrames = 1;
-			numSeconds = 1;
-		}).catch(error => {
-			console.log(error);
-		});
+		await createNewProject(projectName);
+		showCreateProjectModal = false;
+		projectName = "";
 	}
 
-	function projectClicked(row) {
+	async function projectClicked(row) {
 		const projectName = row["Project Name"];
 		selectedProject.set($allProjects.find(project => project.name === projectName));
-		fetch(`http://localhost:${server_port}/projects/${$selectedProject.id}/videos`)
-		.then(response => response.json())
-		.then(data => {
-			projectVideos.set(data.videos);
-		}).catch(error => {
-			console.log(error);
-		});
-		// route to the Upload Videos page
+		await fetchVideos($selectedProject.id);
+
+		// automatically move on to the Upload Videos page
 		push("#/upload");
 	}
 </script>
