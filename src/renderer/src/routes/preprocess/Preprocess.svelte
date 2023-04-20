@@ -20,8 +20,9 @@
 
 	async function pollPreprocessingStatus() {
 		while (!preprocessingCompleted) {
-			// Refresh the videos data store, which will refresh the derived preprocessing status store
-			await fetchVideos($selectedProject.id);
+			// Refresh the videos data store every 30 seconds,
+			// which will also refresh the derived preprocessing status store
+			setTimeout(async () => await fetchVideos($selectedProject.id), 30000);
 		}
 	}
 	
