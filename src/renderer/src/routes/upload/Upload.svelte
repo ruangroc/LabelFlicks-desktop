@@ -21,19 +21,11 @@
         // Must put the 0th FileList item into the FormData object
         const formData = new FormData();
         formData.append('video', selectedVideo[0]);
+
         showLoadingSymbol = true;
-
         await uploadVideo($selectedProject.id, formData);
-
-        // let uploadResponse = await fetch(`http://localhost:${server_port}/projects/${$selectedProject.id}/videos`, {
-		// 	method: 'POST',
-		// 	body: formData
-		// });
-        // let uploadData = await uploadResponse.json();
-
-        // let refreshResponse = await fetch(`http://localhost:${server_port}/projects/${$selectedProject.id}/videos`);
-        // let refreshData = await refreshResponse.json();
-        // projectVideos.set(refreshData.videos);
+        
+        // refresh videos data store
         await fetchVideos($selectedProject.id);
         showLoadingSymbol = false;
     }
