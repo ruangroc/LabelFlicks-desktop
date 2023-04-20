@@ -8,6 +8,9 @@ Access-Control-Allow-Methods: POST
 
 {
   "name": "backyard-chickens",
+  "id": "f9db1507-3997-4890-b51a-283722c41b44",
+  "frames": [],
   "percent_labeled": 0,
+  "videos": [],
   "video_count": 0
 }
