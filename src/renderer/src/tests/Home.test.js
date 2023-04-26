@@ -5,7 +5,8 @@ import Home from "../routes/Home.svelte";
 import Upload from "../routes/upload/Upload.svelte";
 import { expect } from 'vitest';
 import { get } from 'svelte/store';
-import { allProjects, projectsTableData, selectedProject, projectVideos, videosTableData } from "../store.js";
+import { projectVideos, videosTableData } from '../stores/videos';
+import { selectedProject, allProjects, projectsTableData } from '../stores/projects';
 
 const server_port = process.env.SERVER_PORT || 5000;
 const server = setupServer(
