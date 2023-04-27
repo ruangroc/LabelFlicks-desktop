@@ -36,6 +36,13 @@ export const videosTableData = derived(projectVideos, ($projectVideos) => {
 /*************************************************************/
 // Data derived from projectVideos store, transforms data to look good in the preprocessing status table
 /*************************************************************/
+const preprocessingMapping = {
+    "not_started": status.NotStarted,
+    "in_progress": status.InProgress,
+    "success": status.Done,
+    "failed": status.NotStarted
+}
+
 export const preprocessingTableData = derived(projectVideos, ($projectVideos) => {
     // desired format = [
 	// 	{
@@ -48,7 +55,7 @@ export const preprocessingTableData = derived(projectVideos, ($projectVideos) =>
     return $projectVideos.map(video => ({
         "Name": video.name,
         "Date Uploaded": String(video.date_uploaded),
-        "Status": video.done_preprocessing ? status.Done : status.InProgress
+        "Status": preprocessingMapping[video.preprocessing_status]
     }));
 });
 
@@ -79,5 +86,17 @@ export const uploadVideo = async (projectID, data) => {
     }
     catch (error) {
         console.log("Error in uploadVideo:", error);
+    }
+};
+
+/*************************************************************/
+// Function for restarting a video's preprocessing 
+/*************************************************************/
+export const restartVideoPreprocessing = async (videoID) => {
+    try {
+        await fetch(`http://localhost:${server_port}/videos/${videoID}/preprocessing`);
+    }
+    catch (error) {
+        console.log("Error in restartVideoPreprocessing:", error);
     }
 };

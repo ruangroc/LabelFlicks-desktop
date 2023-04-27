@@ -2,18 +2,29 @@
 	import Table from "../../components/Table.svelte";
 	import { status } from "../../types.ts";
 	import { selectedProject } from "../../stores/projects";
-	import { preprocessingTableData, fetchVideos } from "../../stores/videos";
+	import { projectVideos, preprocessingTableData, fetchVideos, restartVideoPreprocessing } from "../../stores/videos";
 
 	let alignData = "text-center";
 
 	let preprocessingCompleted = false;
 	
 	// Upon any change to the preprocessing data store, check statuses
-	const unsubscribe = preprocessingTableData.subscribe((videos) => {
-		let preprocessingStatusPerVideo = videos.map(video => video["Status"]);
+	const unsubscribe = preprocessingTableData.subscribe((videos) => {		
+		// Check if any have failed and need to be restarted
+		let checkAllCompleted = true;
+		videos.forEach(video => {
+			if (video["Status"] !== status.Done) {
+				checkAllCompleted = false;
+			}
+			if (video["Status"] === status.NotStarted) {
+				// retrigger preprocessing
+				const restartVideo = $projectVideos.find(v => v.name === video["Name"])
+				restartVideoPreprocessing(restartVideo.id);
+			}
+		})
 
 		// Proceed if and only if all videos are done being processed
-		if (!preprocessingStatusPerVideo.includes(status.InProgress)) {
+		if (checkAllCompleted) {
 			preprocessingCompleted = true;
 		}
 	})
