@@ -15,7 +15,7 @@ Access-Control-Allow-Headers: *
       "date_uploaded": "2023-03-19",
       "percent_labeled": 0,
       "number_of_frames": 0,
-      "done_preprocessing": false
+      "preprocessing_status": "in_progress"
     }
   ]
 }
