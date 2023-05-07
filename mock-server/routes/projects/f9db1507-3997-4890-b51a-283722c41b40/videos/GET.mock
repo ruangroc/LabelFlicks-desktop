@@ -14,7 +14,8 @@ Access-Control-Allow-Headers: *
       "id": "f4ba3263-5a42-435c-a275-5a9551f2aa6d",
       "date_uploaded": "2023-03-19",
       "percent_labeled": 0,
-      "number_of_frames": 0
+      "number_of_frames": 30,
+      "preprocessing_status": "success"
     }
   ]
 }

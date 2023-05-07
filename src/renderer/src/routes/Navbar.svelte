@@ -1,5 +1,5 @@
 <script>
-	import { selectedProject } from "../store";
+	import { selectedProject } from "../stores/projects";
 </script>
 
 <header class="shadow-md bg-white px-1">

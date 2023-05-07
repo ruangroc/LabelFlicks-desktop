@@ -43,12 +43,14 @@
 									src="src/static/green_checkmark.jpg"
 									alt="done icon: green checkmark"
 								/>
+								Completed
 							{:else if cell === status.InProgress}
 								<img
 									class="mx-auto w-4 h-4"
 									src="src/static/loading.gif"
 									alt="in progress icon: loading gif"
 								/>
+								In Progress
 							{:else if cell === status.NotStarted}
 								<div />
 							{:else if cell.type === "button"}
