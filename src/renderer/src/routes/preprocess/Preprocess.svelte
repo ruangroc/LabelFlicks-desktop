@@ -3,13 +3,14 @@
 	import { status } from "../../types.ts";
 	import { selectedProject } from "../../stores/projects";
 	import { projectVideos, preprocessingTableData, fetchVideos, restartVideoPreprocessing } from "../../stores/videos";
+    import { onMount } from "svelte";
 
 	let alignData = "text-center";
 
 	let preprocessingCompleted = false;
 	
 	// Upon any change to the preprocessing data store, check statuses
-	const unsubscribe = preprocessingTableData.subscribe((videos) => {		
+	const unsubscribe = preprocessingTableData.subscribe((videos) => {	
 		// Check if any have failed and need to be restarted
 		let checkAllCompleted = true;
 		videos.forEach(video => {
@@ -30,14 +31,16 @@
 	})
 
 	async function pollPreprocessingStatus() {
-		while (!preprocessingCompleted) {
-			// Refresh the videos data store every 30 seconds,
-			// which will also refresh the derived preprocessing status store
-			setTimeout(await fetchVideos($selectedProject.id), 30000);
+		await fetchVideos($selectedProject.id);
+		if (!preprocessingCompleted) {
+			setTimeout(pollPreprocessingStatus, 20000);
 		}
 	}
 	
-	pollPreprocessingStatus();
+	onMount(async () => {
+		await fetchVideos($selectedProject.id);
+		pollPreprocessingStatus();
+	});
 </script>
 
 <div class="flex flex-col items-center w-3/4 mx-auto mt-2">
