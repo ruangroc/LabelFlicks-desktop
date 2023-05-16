@@ -1,13 +1,15 @@
 <script>
     import { selectedProject } from "../../stores/projects";
     import { projectVideos } from "../../stores/videos";
-    import { videoFrames, currentBoxes, fetchVideoFrames, fetchBoundingBoxes } from "../../stores/labeling";
+    import { videoFrames, currentBoxes, projectLabels, fetchVideoFrames, fetchBoundingBoxes, fetchLabels } from "../../stores/labeling";
     import { onMount } from "svelte";
 
     let selectedVideoID = $projectVideos[0].id;
     let selectedFrameID = "";
+    let selectedLabelID = "";
 
     onMount(async () => {
+        await fetchLabels($selectedProject.id);
         await fetchVideoFrames(selectedVideoID);
     })
 </script>
@@ -34,4 +36,14 @@
 
     <p>Number of boxes: {$currentBoxes.length}</p>
 
+    <label for="select-label"><h2>Select label:</h2></label>
+    <select name="select-label" bind:value={selectedLabelID}>
+        {#each $projectLabels as label}
+            <option value="{label.id}">{label.name}</option>
+        {/each}
+    </select>
+
+    {#each $videoFrames as frame}
+        <img src="{frame.frame_url}" />
+    {/each}
 </div>

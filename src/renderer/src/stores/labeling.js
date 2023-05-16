@@ -16,6 +16,12 @@ export const currentBoxes = writable([]);
 
 
 /*************************************************************/
+// Data store for the labels for the current project
+/*************************************************************/
+export const projectLabels = writable([]);
+
+
+/*************************************************************/
 // Function for fetching videos from a specific project
 /*************************************************************/
 export const fetchVideoFrames = async (videoID) => {
@@ -31,7 +37,7 @@ export const fetchVideoFrames = async (videoID) => {
 
 
 /*************************************************************/
-// Function for fetching videos from a specific project
+// Function for fetching bounding boxes for a specific frame
 /*************************************************************/
 export const fetchBoundingBoxes = async (frameID) => {
     try {
@@ -41,5 +47,20 @@ export const fetchBoundingBoxes = async (frameID) => {
     }
     catch (error) {
         console.log("Error in fetchBoundingBoxes:", error);
+    }
+};
+
+
+/*************************************************************/
+// Function for fetching labels from a specific project
+/*************************************************************/
+export const fetchLabels = async (projectID) => {
+    try {
+        const response = await fetch(`http://localhost:${server_port}/projects/${projectID}/labels`);
+		const data = await response.json();
+		projectLabels.set(data.labels);
+    }
+    catch (error) {
+        console.log("Error in fetchLabels:", error);
     }
 };

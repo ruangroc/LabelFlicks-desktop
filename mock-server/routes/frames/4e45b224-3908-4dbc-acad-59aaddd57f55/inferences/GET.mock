@@ -1,0 +1,52 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Accept: application/json;
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true 
+Access-Control-Allow-Headers: *
+
+{
+  "frame_id": "4e45b224-3908-4dbc-acad-59aaddd57f55",
+  "bounding_boxes": [
+    {
+      "x_top_left": 107,
+      "y_top_left": 150,
+      "x_bottom_right": 148,
+      "y_bottom_right": 208,
+      "width": 40,
+      "height": 57,
+      "frame_id": "4e45b224-3908-4dbc-acad-59aaddd57f55",
+      "label_id": "22a93b22-a6f3-4357-a9a8-1634367f2cbe"
+    },
+    {
+      "x_top_left": 268,
+      "y_top_left": 26,
+      "x_bottom_right": 286,
+      "y_bottom_right": 83,
+      "width": 18,
+      "height": 57,
+      "frame_id": "4e45b224-3908-4dbc-acad-59aaddd57f55",
+      "label_id": "22a93b22-a6f3-4357-a9a8-1634367f2cbe"
+    },
+    {
+      "x_top_left": 261,
+      "y_top_left": 206,
+      "x_bottom_right": 308,
+      "y_bottom_right": 286,
+      "width": 47,
+      "height": 80,
+      "frame_id": "4e45b224-3908-4dbc-acad-59aaddd57f55",
+      "label_id": "22a93b22-a6f3-4357-a9a8-1634367f2cbe"
+    },
+    {
+      "x_top_left": 505,
+      "y_top_left": 111,
+      "x_bottom_right": 541,
+      "y_bottom_right": 195,
+      "width": 35,
+      "height": 83,
+      "frame_id": "4e45b224-3908-4dbc-acad-59aaddd57f55",
+      "label_id": "22a93b22-a6f3-4357-a9a8-1634367f2cbe"
+    }
+  ]
+}
