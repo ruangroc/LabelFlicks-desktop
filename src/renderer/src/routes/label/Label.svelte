@@ -5,30 +5,76 @@
     import { onMount } from "svelte";
 
     let selectedVideoID = $projectVideos[0].id;
-    let selectedFrameID = "";
+    let selectedFrame = "";
     let selectedLabelID = "";
 
     onMount(async () => {
         await fetchLabels($selectedProject.id);
         await fetchVideoFrames(selectedVideoID);
-    })
+        selectedFrame = $videoFrames[0];
+    });
+
+    function getPercentFramesLabeled() {
+        let numLabeled = 0;
+        for (var frame of $videoFrames) {
+            if (frame.human_reviewed === true)
+                numLabeled += 1;
+        }
+        let percent = 100 * (numLabeled / $videoFrames.length);
+        return percent;
+    }
 </script>
 
-<div class="flex flex-col items-center w-3/4 mx-auto mt-2">
-    <h1>Project: {$selectedProject.name}</h1>
+<div class="flex flex-col items-center w-5/6 mx-auto mt-2">
+    <div class="flex flex-row w-full justify-end mb-1">
+        <button class="bg-gray-300 ml-auto p-2 rounded"
+            ><a href="/">Save</a></button
+        >
+        <button class="bg-green-300 ml-3 p-2 rounded"
+            ><a href="#/preprocess">Done Labeling</a></button
+        >
+    </div>
 
-    <label for="select-video"><h2>Select video:</h2></label>
-    <select name="select-video" bind:value={selectedVideoID} on:change="{fetchVideoFrames(selectedVideoID)}">
-        {#each $projectVideos as video}
-            <option value="{video.id}">{video.name}</option>
-        {/each}
-    </select>
+    <div class="flex flex-row flex-wrap w-full justify-start mb-2 py-1">
+        <h1 class="text-left text-lg font-semibold w-full my-1">
+            Project: {$selectedProject.name}
+        </h1>
+    </div>
+    
+    <div class="flex flex-row flex-wrap w-full justify-start mb-2 py-1">
+        <div class="flex flex-row w-full py-1">
+            <label class="pr-2" for="select-video"><h2>Current video:</h2></label>
+            <select name="select-video" bind:value={selectedVideoID} on:change="{fetchVideoFrames(selectedVideoID)}">
+                {#each $projectVideos as video}
+                    <option value="{video.id}">{video.name}</option>
+                {/each}
+            </select>
+        </div>
+        <div class="w-full py-1">
+            <p> {getPercentFramesLabeled()}% of {$videoFrames.length} total frames labeled </p>
+        </div>
+    </div>
 
-    <p>Selected video ID: {selectedVideoID}</p>
-    <p>Number of frames: {$videoFrames.length}</p>
+    <div class="flex flex-row w-full justify-start mb-2 py-1">
+        <!-- Display current frame -->
+        <div class="w-1/2">
+            <img src="{selectedFrame.frame_url}" alt="still frame from the video" />
+        </div>
+        
+        <!-- Display labels -->
+        <div class="w-1/2">
+            {#each $projectLabels as label}
+                <p>{label.name}</p>
+            {/each}
+        </div>
+    </div>
+    
 
-    <label for="select-frame"><h2>Select frame:</h2></label>
-    <select name="select-frame" bind:value={selectedFrameID} on:change="{fetchBoundingBoxes(selectedFrameID)}">
+    
+    <!-- Experimentation below -->
+
+    <!-- <label for="select-frame"><h2>Select frame:</h2></label>
+    <select name="select-frame" bind:value={selectedFrame.id} on:change="{fetchBoundingBoxes(selectedFrame.id)}">
         {#each $videoFrames as frame}
             <option value="{frame.id}">{frame.id}</option>
         {/each}
@@ -44,6 +90,6 @@
     </select>
 
     {#each $videoFrames as frame}
-        <img src="{frame.frame_url}" />
-    {/each}
+        <img src="{frame.frame_url}" alt="still frame from the video" />
+    {/each} -->
 </div>
