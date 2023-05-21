@@ -6,7 +6,6 @@
 
     let selectedVideoID = $projectVideos[0].id;
     let selectedFrame = "";
-    let selectedLabelID = "";
 
     onMount(async () => {
         await fetchLabels($selectedProject.id);
@@ -36,7 +35,7 @@
     </div>
 
     <div class="flex flex-row flex-wrap w-full justify-start mb-2 py-1">
-        <h1 class="text-left text-lg font-semibold w-full my-1">
+        <h1 class="text-left text-lg font-semibold w-full">
             Project: {$selectedProject.name}
         </h1>
     </div>
@@ -56,16 +55,62 @@
     </div>
 
     <div class="flex flex-row w-full justify-start mb-2 py-1">
-        <!-- Display current frame -->
-        <div class="w-1/2">
+        <!-- Display current frame and player controls -->
+        <!-- TODO: make responsive. It's only fine in full screen rn -->
+        <div class="w-1/2 flex flex-col">
             <img src="{selectedFrame.frame_url}" alt="still frame from the video" />
+            <div class="my-1 flex flex-row">
+                <p class="mr-6">
+                    Frame: {selectedFrame ? selectedFrame.frame_url.split("/").at(-1) : ""}
+                </p>
+                <button class="border-solid border-2 border-gray-400 mr-1 p-1 rounded text-sm">
+                    Speed
+                </button>
+                <button class="border-solid border-2 border-gray-400 ml-1 p-1 rounded text-sm">
+                    Play/Pause
+                </button>
+                <button class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm">
+                    Back
+                </button>
+                <button class="border-solid border-2 border-gray-400 mr-6 p-1 rounded text-sm">
+                    Next
+                </button>
+                <button class="border-solid border-2 border-gray-400 mr-1 p-1 rounded text-sm">
+                    Add Bounding Box
+                </button>
+                <button class="border-solid border-2 border-gray-400 mr-1 p-1 rounded text-sm">
+                    Finetune Predictions
+                </button>
+            </div>
         </div>
         
         <!-- Display labels -->
-        <div class="w-1/2">
-            {#each $projectLabels as label}
-                <p>{label.name}</p>
-            {/each}
+        <div class="w-1/2 pl-4">
+            <div class="flex flex-row">
+                <h2 class="text-left text-lg font-semibold my-1">Object Detection Labels</h2>
+                <button class="border-solid border-2 border-gray-400 ml-auto p-1 rounded text-sm">
+                    Add Label
+                </button>
+            </div>
+            
+            <div class="flex flex-col">
+                {#each $projectLabels as label}
+                    <div class="flex flex-row">
+                        <p class="mr-4">{label.name}</p>
+                        <button class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm">
+                            Rename
+                        </button>
+                        <button class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm">
+                            Color
+                        </button>
+                        <button class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm">
+                            Delete
+                        </button>
+                    </div>
+                    <div class="w-full h-4 bg-gray-300 mt-1 mb-4"></div>
+                    
+                {/each}
+            </div>
         </div>
     </div>
     
