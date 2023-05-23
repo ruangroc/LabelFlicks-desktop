@@ -1,13 +1,14 @@
 <script>
     import { selectedProject } from "../../stores/projects";
     import { projectVideos } from "../../stores/videos";
-    import { videoFrames, currentBoxes, projectLabels, fetchVideoFrames, fetchBoundingBoxes, fetchLabels } from "../../stores/labeling";
+    import { videoFrames, projectLabels, fetchVideoFrames, fetchBoundingBoxes, fetchLabels } from "../../stores/labeling";
     import { onMount } from "svelte";
     import { Stretch } from 'svelte-loading-spinners';
+    import BoundingBoxes from "../../components/BoundingBoxes.svelte";
 
     let showLoadingSymbol = true;
     let selectedVideoID = $projectVideos[0].id;
-    let selectedFrame = "";
+    let selectedFrame = {};
     let frameIndex = 0;
     let defaultStyle = "border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm";
 
@@ -15,6 +16,7 @@
         await fetchLabels($selectedProject.id);
         await fetchVideoFrames(selectedVideoID);
         selectedFrame = $videoFrames[frameIndex];
+        await fetchBoundingBoxes(selectedFrame.id);
         showLoadingSymbol = false;
     });
 
@@ -28,14 +30,15 @@
         return percent;
     }
 
-    function changeFrame(value) {
+    async function changeFrame(value) {
         frameIndex += value;
         selectedFrame = $videoFrames[frameIndex];
+        await fetchBoundingBoxes(selectedFrame.id);
     }
 </script>
 
 <div class="flex flex-col items-center w-5/6 mx-auto">
-    <div class="flex flex-row w-full justify-end my-2">
+    <div class="flex flex-row w-full justify-end mt-2">
         <button class="bg-gray-300 ml-auto p-2 rounded"
             ><a href="/">Save</a></button
         >
@@ -44,7 +47,7 @@
         >
     </div>
 
-    <div class="flex flex-row flex-wrap w-full justify-start mb-2 py-1">
+    <div class="flex flex-row flex-wrap w-full justify-start mb-1">
         <h1 class="text-left text-lg font-semibold w-full">
             Project: {$selectedProject.name}
         </h1>
@@ -70,7 +73,12 @@
         <div class="grid grid-cols-2">
             <!-- Display current frame and player controls -->
             <div class="flex flex-col">
-                <img class="h-3/4" src="{selectedFrame.frame_url}" alt="still frame from the video" />
+
+                <!-- Container for frame and bounding boxes -->
+                <div class="img-overlay-wrap">
+                    <img id="frame-img" src="{selectedFrame.frame_url}" alt="still frame from the video" />
+                    <BoundingBoxes bind:selectedFrame />
+                </div>
 
                 <div class="my-1 grid grid-cols-4">
 
@@ -150,4 +158,22 @@
 		cursor: not-allowed;
 		color: darkgray;
 	}
+
+    .img-overlay-wrap {
+        position: relative;
+        display: inline-block; /* <= shrinks container to image size */
+        transition: transform 150ms ease-in-out;
+    }
+
+    .img-overlay-wrap img { /* <= optional, for responsiveness */
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* .img-overlay-wrap svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+    } */
 </style>

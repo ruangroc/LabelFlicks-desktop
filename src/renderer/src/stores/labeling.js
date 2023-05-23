@@ -20,6 +20,14 @@ export const currentBoxes = writable([]);
 /*************************************************************/
 export const projectLabels = writable([]);
 
+/*************************************************************/
+// Derived store mapping label IDs to label names
+/*************************************************************/
+export const labelIdToName = derived(projectLabels, ($projectLabels) => {
+    let mapping = {};
+    $projectLabels.forEach(label => mapping[label.id] = label.name);
+    return mapping;
+});
 
 /*************************************************************/
 // Function for fetching videos from a specific project
