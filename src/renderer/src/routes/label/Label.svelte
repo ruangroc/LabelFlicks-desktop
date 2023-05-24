@@ -5,6 +5,7 @@
     import { onMount } from "svelte";
     import { Stretch } from 'svelte-loading-spinners';
     import BoundingBoxes from "../../components/BoundingBoxes.svelte";
+    import Timeline from "../../components/Timeline.svelte";
 
     let showLoadingSymbol = true;
     let selectedVideoID = $projectVideos[0].id;
@@ -122,31 +123,14 @@
             
             <!-- Display labels -->
             <div class="pl-4 overflow-y-auto">
-                <div class="flex flex-row">
+                <div id="labels-title-row" class="flex flex-row">
                     <h2 class="text-left text-lg font-semibold my-1">Object Detection Labels</h2>
                     <button class="border-solid border-2 border-gray-400 ml-auto p-1 rounded text-sm">
                         Add Label
                     </button>
                 </div>
-                
-                <div class="flex flex-col">
-                    {#each $projectLabels as label}
-                        <div class="flex flex-row">
-                            <p class="mr-4">{label.name}</p>
-                            <button class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm">
-                                Rename
-                            </button>
-                            <button class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm">
-                                Color
-                            </button>
-                            <button class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm">
-                                Delete
-                            </button>
-                        </div>
-                        <!-- TODO: add colored segments where labels are detected -->
-                        <div class="w-full h-4 bg-gray-300 mt-1 mb-4"></div>
-                    {/each}
-                </div>
+
+                <Timeline />
             </div>
         </div>
     {/if}
@@ -170,10 +154,4 @@
         max-width: 100%;
         height: auto;
     }
-
-    /* .img-overlay-wrap svg {
-        position: absolute;
-        top: 0;
-        left: 0;
-    } */
 </style>
