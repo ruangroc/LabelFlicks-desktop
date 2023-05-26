@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import { videoFrames, projectLabels, labelsPerFrame } from "../stores/labeling";
+    import { videoFrames, projectLabels } from "../stores/labeling";
 
     // total frames = videoFrames.length
     // projectLabels = list of unique labels
@@ -20,7 +20,6 @@
 
     onMount(() => {
         pollTitleRenderStatus();
-        console.log($labelsPerFrame);
     });
 
     function pollTitleRenderStatus() {
@@ -59,13 +58,13 @@
                     width="{timelineWidth}px"
                     height="{timelineHeight}px"
                 >
-                    {#each $labelsPerFrame as frameLabels, frame_index}
+                    {#each $videoFrames as frame, frame_index}
                             <rect 
                                 x="{frame_index * frameWidth}"
                                 y="0"
                                 width="{frameWidth}px" 
                                 height="{timelineHeight}px"
-                                class={frameLabels.find(x => x === label.id) ? colors[label_index % colors.length] : "fill-gray-300"}
+                                class={frame.labels.find(x => x === label.id) ? colors[label_index % colors.length] : "fill-gray-300"}
                             >
                             </rect>
                     {/each}

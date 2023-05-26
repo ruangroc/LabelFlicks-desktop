@@ -17,12 +17,7 @@ Access-Control-Allow-Headers: *
       "frame_url": "C:\\Users\\anita\\Documents\\video-labeling-backend/local_projects/testing/president-mckinley-oath/frames/9.jpg",
       "id": "4e45b224-3908-4dbc-acad-59aaddd57f55",
       "labels": [
-        {
-          "name": "person",
-          "project_id": "f9db1507-3997-4890-b51a-283722c41b40",
-          "frame_id": "4e45b224-3908-4dbc-acad-59aaddd57f55",
-          "id": "22a93b22-a6f3-4357-a9a8-1634367f2cbe"
-        }
+        "22a93b22-a6f3-4357-a9a8-1634367f2cbe"
       ]
     },
     {
@@ -34,12 +29,7 @@ Access-Control-Allow-Headers: *
       "frame_url": "C:\\Users\\anita\\Documents\\video-labeling-backend/local_projects/testing/president-mckinley-oath/frames/13.jpg",
       "id": "b367fb67-6434-47b1-97c9-fd84799b7655",
       "labels": [
-        {
-          "name": "person",
-          "project_id": "f9db1507-3997-4890-b51a-283722c41b40",
-          "frame_id": "4e45b224-3908-4dbc-acad-59aaddd57f55",
-          "id": "22a93b22-a6f3-4357-a9a8-1634367f2cbe"
-        }
+          "22a93b22-a6f3-4357-a9a8-1634367f2cbe"
       ]
     }
   ]

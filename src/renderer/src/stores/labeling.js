@@ -8,16 +8,6 @@ const server_port = import.meta.env.VITE_SERVER_PORT || 5000;
 /*************************************************************/
 export const videoFrames = writable([]);
 
-/*************************************************************/
-// Derived store collecting only label IDs per frame
-/*************************************************************/
-export const labelsPerFrame = derived(videoFrames, ($videoFrames) => {
-    // Create a list of detected label IDs for each frame
-    return $videoFrames.map(frame => (
-        frame.labels.map(label => label.id)
-    ));
-});
-
 
 /*************************************************************/
 // Data store for the bounding boxes for the current frame
