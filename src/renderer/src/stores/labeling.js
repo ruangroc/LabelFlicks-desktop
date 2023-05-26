@@ -8,6 +8,16 @@ const server_port = import.meta.env.VITE_SERVER_PORT || 5000;
 /*************************************************************/
 export const videoFrames = writable([]);
 
+/*************************************************************/
+// Derived store for figuring out number of human-reviewed frames
+/*************************************************************/
+export const percentReviewedFrames = derived(videoFrames, ($videoFrames) => {
+    let numReviewed = 0;
+    $videoFrames.forEach(frame => {
+        if (frame.human_reviewed) numReviewed += 1
+    });
+    return 100 * (numReviewed / $videoFrames.length);
+});
 
 /*************************************************************/
 // Data store for the bounding boxes for the current frame

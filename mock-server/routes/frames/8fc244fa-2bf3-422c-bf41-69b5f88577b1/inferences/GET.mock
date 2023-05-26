@@ -1,0 +1,32 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Accept: application/json;
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true 
+Access-Control-Allow-Headers: *
+
+{
+  "frame_id": "8fc244fa-2bf3-422c-bf41-69b5f88577b1",
+  "bounding_boxes": [
+    {
+      "x_top_left": 111,
+      "y_top_left": 146,
+      "x_bottom_right": 149,
+      "y_bottom_right": 208,
+      "width": 37,
+      "height": 62,
+      "frame_id": "8fc244fa-2bf3-422c-bf41-69b5f88577b1",
+      "label_id": "22a93b22-a6f3-4357-a9a8-1634367f2cbe"
+    },
+    {
+      "x_top_left": 53,
+      "y_top_left": 199,
+      "x_bottom_right": 129,
+      "y_bottom_right": 239,
+      "width": 75,
+      "height": 40,
+      "frame_id": "8fc244fa-2bf3-422c-bf41-69b5f88577b1",
+      "label_id": "a6d9b763-a7aa-4993-b630-0149e25242da"
+    }
+  ]
+}

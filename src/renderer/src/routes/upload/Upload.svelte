@@ -36,7 +36,7 @@
         <button class="bg-gray-300 ml-auto p-2 rounded"
             ><a href="/">Cancel</a></button
         >
-        <button class="bg-green-300 ml-3 p-2 rounded"
+        <button class={($videosTableData.length ? "bg-green-300" : "disabled bg-gray-200 text-gray-500") + " ml-3 p-2 rounded"}
             ><a href="#/preprocess">Next Step</a></button
         >
     </div>

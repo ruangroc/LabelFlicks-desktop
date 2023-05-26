@@ -1,7 +1,7 @@
 <script>
     import { selectedProject } from "../../stores/projects";
     import { projectVideos } from "../../stores/videos";
-    import { videoFrames, projectLabels, fetchVideoFrames, fetchBoundingBoxes, fetchLabels } from "../../stores/labeling";
+    import { videoFrames, percentReviewedFrames, fetchVideoFrames, fetchBoundingBoxes, fetchLabels } from "../../stores/labeling";
     import { onMount } from "svelte";
     import { Stretch } from 'svelte-loading-spinners';
     import BoundingBoxes from "../../components/BoundingBoxes.svelte";
@@ -12,6 +12,8 @@
     let selectedFrame = {};
     let frameIndex = 0;
     let defaultStyle = "border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm";
+    let paused = true;
+    let autoPlayTimeout;
 
     onMount(async () => {
         await fetchLabels($selectedProject.id);
@@ -35,6 +37,23 @@
         frameIndex += value;
         selectedFrame = $videoFrames[frameIndex];
         await fetchBoundingBoxes(selectedFrame.id);
+    }
+
+    function autoPlayFrames() {
+        changeFrame(1);
+        if (frameIndex === $videoFrames.length-1)
+            paused = true;
+        else
+            autoPlayTimeout = setTimeout(autoPlayFrames, 2000);
+    }
+
+    function clickPlayPause() {
+        paused = !paused;
+
+        if (paused)
+            clearTimeout(autoPlayTimeout);
+        else
+            autoPlayFrames();
     }
 </script>
 
@@ -64,7 +83,7 @@
             </select>
         </div>
         <div class="w-full py-1">
-            <p> {getPercentFramesLabeled()}% of {$videoFrames.length} total frames labeled </p>
+            <p> {$percentReviewedFrames}% of {$videoFrames.length} total frames reviewed </p>
         </div>
     </div>
 
@@ -97,8 +116,11 @@
                             Back
                         </button>
 
-                        <button class="border-solid border-2 border-gray-400 ml-1 p-1 rounded text-sm">
-                            Play/Pause
+                        <button 
+                            class={`${frameIndex === $videoFrames.length-1 ? "disabled" : ""} ${defaultStyle}`}
+                            on:click={() => clickPlayPause()}
+                        >
+                            { paused ? "Play" : "Pause"}
                         </button>
 
                         <button 
