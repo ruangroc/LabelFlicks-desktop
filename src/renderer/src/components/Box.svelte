@@ -24,7 +24,8 @@
 
         $currentBoxes[boxIndex].label_id = $nameToLabelId[selectedLabel];
         displayedLabel = selectedLabel;
-        labelDisplayLength = displayedLabel.length * 6
+        labelDisplayLength = displayedLabel.length * 6;
+        $currentBoxes[boxIndex].edited = true;
 		isEditing = false;
 	}
 </script>
