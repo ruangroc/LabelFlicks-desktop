@@ -31,15 +31,6 @@
         showLoadingSymbol = false;
     });
 
-    function getPercentFramesLabeled() {
-        let numLabeled = 0;
-        for (var frame of $videoFrames) {
-            if (frame.human_reviewed === true) numLabeled += 1;
-        }
-        let percent = 100 * (numLabeled / $videoFrames.length);
-        return percent;
-    }
-
     async function changeFrame(value) {
         frameIndex += value;
         selectedFrame = $videoFrames[frameIndex];
@@ -57,6 +48,15 @@
 
         if (paused) clearTimeout(autoPlayTimeout);
         else autoPlayFrames();
+    }
+
+    async function submitHumanEdits() {
+        showLoadingSymbol = true;
+        await sendUpdatedBoundingBoxes();
+
+        // Get the updated unique labels per frame
+        await fetchVideoFrames(selectedVideoID);
+        showLoadingSymbol = false;
     }
 </script>
 
@@ -92,13 +92,19 @@
             </select>
         </div>
         <div class="w-full py-1">
+            {#if showLoadingSymbol && $videoFrames && $percentReviewedFrames}
             <p>
                 {$percentReviewedFrames}% of {$videoFrames.length} total frames reviewed
             </p>
+            {:else}
+            <p>
+                Calculating percent of total frames reviewed
+            </p>
+            {/if}
         </div>
     </div>
 
-    {#if showLoadingSymbol}
+    {#if showLoadingSymbol || !$videoFrames}
         <Stretch size="60" color="#FF3E00" unit="px" duration="1s" />
     {:else}
         <div class="grid grid-cols-2">
@@ -164,7 +170,7 @@
                         </button>
                         <button
                             class="border-solid border-2 border-gray-400 mr-1 p-1 rounded text-sm"
-                            on:click={sendUpdatedBoundingBoxes}
+                            on:click={submitHumanEdits}
                         >
                             Finetune Predictions
                         </button>

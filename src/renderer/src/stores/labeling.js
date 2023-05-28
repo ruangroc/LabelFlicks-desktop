@@ -14,6 +14,7 @@ export const videoFrames = writable([]);
 /*************************************************************/
 export const percentReviewedFrames = derived(videoFrames, ($videoFrames) => {
     let numReviewed = 0;
+    if (!$videoFrames) return 0;
     $videoFrames.forEach(frame => {
         if (frame.human_reviewed) numReviewed += 1
     });
@@ -112,7 +113,7 @@ export const sendUpdatedBoundingBoxes = async () => {
     editedBoxes = editedBoxes.map(({ edited, ...box }) => box);
 
     // Send only the edited boxes
-    const response = await fetch(`http://localhost:${server_port}/boundingboxes`, {
+    await fetch(`http://localhost:${server_port}/boundingboxes`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
