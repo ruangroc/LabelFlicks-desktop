@@ -40,6 +40,15 @@ export const labelIdToName = derived(projectLabels, ($projectLabels) => {
 });
 
 /*************************************************************/
+// Derived store mapping label names to label IDs
+/*************************************************************/
+export const nameToLabelId = derived(projectLabels, ($projectLabels) => {
+    let mapping = {};
+    $projectLabels.forEach(label => mapping[label.name] = label.id);
+    return mapping;
+});
+
+/*************************************************************/
 // Function for fetching videos from a specific project
 /*************************************************************/
 export const fetchVideoFrames = async (videoID) => {
