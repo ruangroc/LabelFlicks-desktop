@@ -4,19 +4,19 @@ Access-Control-Allow-Origin: *
 
 [
   {
+    "name": "testing-video",
+    "id": "f9db1507-3997-4890-b51a-283722c41b40",
+    "frames": [],
+    "percent_labeled": 20,
+    "videos": [],
+    "video_count": 10
+  },
+  {
     "name": "raccoon-sightings",
     "id": "f9db1507-3997-4890-b51a-283722c41b44",
     "frames": [],
     "percent_labeled": 17,
     "videos": [],
     "video_count": 20
-  },
-  {
-    "name": "neighborhood-cats",
-    "id": "f9db1507-3997-4890-b51a-283722c41b40",
-    "frames": [],
-    "percent_labeled": 20,
-    "videos": [],
-    "video_count": 10
   }
 ]

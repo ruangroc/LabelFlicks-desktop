@@ -1,0 +1,82 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Accept: application/json;
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true 
+Access-Control-Allow-Headers: *
+
+{
+  "frame_id": "b367fb67-6434-47b1-97c9-fd84799b7655",
+  "bounding_boxes": [
+    {
+      "x_top_left": 363,
+      "y_top_left": 199,
+      "x_bottom_right": 408,
+      "y_bottom_right": 285,
+      "width": 45,
+      "height": 86,
+      "frame_id": "b367fb67-6434-47b1-97c9-fd84799b7655",
+      "label_id": "22a93b22-a6f3-4357-a9a8-1634367f2cbe"
+    },
+    {
+      "x_top_left": 343,
+      "y_top_left": 156,
+      "x_bottom_right": 372,
+      "y_bottom_right": 237,
+      "width": 28,
+      "height": 81,
+      "frame_id": "b367fb67-6434-47b1-97c9-fd84799b7655",
+      "label_id": "22a93b22-a6f3-4357-a9a8-1634367f2cbe"
+    },
+    {
+      "x_top_left": 53,
+      "y_top_left": 197,
+      "x_bottom_right": 133,
+      "y_bottom_right": 241,
+      "width": 79,
+      "height": 43,
+      "frame_id": "b367fb67-6434-47b1-97c9-fd84799b7655",
+      "label_id": "a6d9b763-a7aa-4993-b630-0149e25242da"
+    },
+    {
+      "x_top_left": 264,
+      "y_top_left": 204,
+      "x_bottom_right": 315,
+      "y_bottom_right": 285,
+      "width": 51,
+      "height": 80,
+      "frame_id": "b367fb67-6434-47b1-97c9-fd84799b7655",
+      "label_id": "22a93b22-a6f3-4357-a9a8-1634367f2cbe"
+    },
+    {
+      "x_top_left": 113,
+      "y_top_left": 144,
+      "x_bottom_right": 151,
+      "y_bottom_right": 208,
+      "width": 37,
+      "height": 64,
+      "frame_id": "b367fb67-6434-47b1-97c9-fd84799b7655",
+      "label_id": "22a93b22-a6f3-4357-a9a8-1634367f2cbe"
+    },
+    {
+      "x_top_left": 387,
+      "y_top_left": 377,
+      "x_bottom_right": 441,
+      "y_bottom_right": 452,
+      "width": 54,
+      "height": 74,
+      "frame_id": "b367fb67-6434-47b1-97c9-fd84799b7655",
+      "label_id": "22a93b22-a6f3-4357-a9a8-1634367f2cbe"
+    },
+    {
+      "x_top_left": 434,
+      "y_top_left": 407,
+      "x_bottom_right": 484,
+      "y_bottom_right": 454,
+      "width": 50,
+      "height": 46,
+      "frame_id": "b367fb67-6434-47b1-97c9-fd84799b7655",
+      "label_id": "22a93b22-a6f3-4357-a9a8-1634367f2cbe"
+    }
+  ]
+}

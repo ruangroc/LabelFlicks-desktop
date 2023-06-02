@@ -1,6 +1,5 @@
 import { writable, derived } from 'svelte/store';
 import { status } from "../types.ts";
-import { allProjects, selectedProject } from "./projects.js";
 
 const server_port = import.meta.env.VITE_SERVER_PORT || 5000;
 

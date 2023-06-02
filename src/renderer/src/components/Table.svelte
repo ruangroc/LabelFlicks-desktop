@@ -40,7 +40,7 @@
 							{#if cell === status.Done}
 								<img
 									class="mx-auto w-4 h-4"
-									src="src/static/green_checkmark.jpg"
+									src="src/static/green-checkmark.png"
 									alt="done icon: green checkmark"
 								/>
 								Completed

@@ -1,0 +1,32 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Accept: application/json;
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true 
+Access-Control-Allow-Headers: *
+
+{
+  "project_id": "f9db1507-3997-4890-b51a-283722c41b40",
+  "labels": [
+    {
+      "name": "person",
+      "project_id": "f9db1507-3997-4890-b51a-283722c41b40",
+      "id": "22a93b22-a6f3-4357-a9a8-1634367f2cbe"
+    },
+    {
+      "name": "car",
+      "project_id": "f9db1507-3997-4890-b51a-283722c41b40",
+      "id": "2e84f4e1-3348-4d00-adce-ce960629b76a"
+    },
+    {
+      "name": "umbrella",
+      "project_id": "f9db1507-3997-4890-b51a-283722c41b40",
+      "id": "a6d9b763-a7aa-4993-b630-0149e25242da"
+    },
+    {
+      "name": "traffic light",
+      "project_id": "f9db1507-3997-4890-b51a-283722c41b40",
+      "id": "22d1e636-e5cb-48f8-99e6-60943fbc0e8e"
+    }
+  ]
+}

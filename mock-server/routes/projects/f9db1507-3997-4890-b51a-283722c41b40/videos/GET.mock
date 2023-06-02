@@ -9,12 +9,12 @@ Access-Control-Allow-Headers: *
   "project_id": "f9db1507-3997-4890-b51a-283722c41b40",
   "videos": [
     {
-      "name": "cat-cam.mp4",
+      "name": "president-mckinley-oath.mp4",
       "project_id": "f9db1507-3997-4890-b51a-283722c41b40",
-      "id": "f4ba3263-5a42-435c-a275-5a9551f2aa6d",
-      "date_uploaded": "2023-03-19",
+      "id": "423fe5d4-ee46-4b24-87a7-3ad25a6d0bbd",
+      "date_uploaded": "2023-05-16",
       "percent_labeled": 0,
-      "number_of_frames": 30,
+      "number_of_frames": 2,
       "preprocessing_status": "success"
     }
   ]
