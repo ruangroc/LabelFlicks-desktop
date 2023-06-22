@@ -2,12 +2,14 @@
     import { selectedProject } from "../../stores/projects";
     import { projectVideos } from "../../stores/videos";
     import {
+        currentBoxes,
         videoFrames,
         percentReviewedFrames,
         fetchVideoFrames,
         fetchBoundingBoxes,
         fetchLabels,
         sendUpdatedBoundingBoxes,
+        updateBoundingBoxesNoPredictions,
     } from "../../stores/labeling";
     import { onMount } from "svelte";
     import { Stretch } from "svelte-loading-spinners";
@@ -38,6 +40,17 @@
     }
 
     async function changeFrame(value) {
+        // Once the frame changes and no additional edits are made,
+        // assume all boxes in frame have been human-reviewed 
+        // i.e. all boxes look good to the user 
+        // but only if moving forward in the video, not back
+        if (Number(value) > 0) {
+            $videoFrames[frameIndex].humanReviewed = true;
+            $currentBoxes.forEach(box => box.prediction = false);
+            await updateBoundingBoxesNoPredictions();
+        }
+
+        // Then move onto the next frame
         frameIndex += value;
         selectedFrame = $videoFrames[frameIndex];
         await fetchBoundingBoxes(selectedFrame.id);

@@ -102,7 +102,8 @@ export const fetchLabels = async (projectID) => {
 
 
 /*************************************************************/
-// Function for sending updated boxes to the backend
+// Function for sending updated boxes to the backend to 
+// finetune label predictions
 /*************************************************************/
 export const sendUpdatedBoundingBoxes = async (selectedProjectID, selectedVideoID) => { 
     // Determine which boxes were edited
@@ -118,7 +119,6 @@ export const sendUpdatedBoundingBoxes = async (selectedProjectID, selectedVideoI
     //     "video_id": selectedVideoID,
     //     "updated_boxes": editedBoxes
     // }
-    // console.log("Trying to send:", JSON.stringify(requestBody))
 
     // Send only the edited boxes and specify query parameters to update the boxes
     // in the correct project and video
@@ -129,5 +129,27 @@ export const sendUpdatedBoundingBoxes = async (selectedProjectID, selectedVideoI
             'Accept': 'application/json'
         },
         body: JSON.stringify(editedBoxes)
+    });
+};
+
+
+/*************************************************************/
+// Function for sending reviewed boxes to the backend without
+// finetuning the predictions
+/*************************************************************/
+export const updateBoundingBoxesNoPredictions = async () => { 
+    // Drop the "edited" property from each box as it won't be accepted
+    // by the backend and only the frontend needs to know about it
+    let boxes = get(currentBoxes).map(({ edited, ...box }) => box);
+
+    // Send only the edited boxes and specify query parameters to update the boxes
+    // in the correct project and video
+    await fetch(`http://localhost:${server_port}/boundingboxes`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(boxes)
     });
 };
