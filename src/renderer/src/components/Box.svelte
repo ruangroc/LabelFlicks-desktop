@@ -39,11 +39,12 @@
         height="{bbox.height * heightRatio}">
     </rect>
 
-    <!-- write out the label name at the top of each bounding box -->
+    <!-- write out the label name at the inner left top corner of each bounding box -->
     {#if !isEditing}
-        <rect class={bbox.prediction ? "predicted-label-bg" : "bounding-box-label-bg"} x="0" y="-9" width="{labelDisplayLength}" height="9" />
+        <rect class={bbox.prediction ? "predicted-label-bg" : "bounding-box-label-bg"} x="0" y="0" width="{labelDisplayLength}" height="9" />
         <text 
             class="bounding-box-label" 
+            x="0" y="6"
             on:click={() => isEditing = true}
             on:keypress={() => isEditing = true}
         >
