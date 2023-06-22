@@ -24,12 +24,18 @@
     let autoPlayTimeout;
 
     onMount(async () => {
+        await refreshScreen();
+    });
+
+    async function refreshScreen() {
+        showLoadingSymbol = true;
         await fetchLabels($selectedProject.id);
         await fetchVideoFrames(selectedVideoID);
+        frameIndex = 0;
         selectedFrame = $videoFrames[frameIndex];
         await fetchBoundingBoxes(selectedFrame.id);
         showLoadingSymbol = false;
-    });
+    }
 
     async function changeFrame(value) {
         frameIndex += value;
@@ -52,10 +58,11 @@
 
     async function submitHumanEdits() {
         showLoadingSymbol = true;
-        await sendUpdatedBoundingBoxes();
+        await sendUpdatedBoundingBoxes($selectedProject.id, selectedVideoID);
 
         // Get the updated unique labels per frame
         await fetchVideoFrames(selectedVideoID);
+        await fetchBoundingBoxes(selectedFrame.id);
         showLoadingSymbol = false;
     }
 </script>
@@ -84,7 +91,7 @@
             <select
                 name="select-video"
                 bind:value={selectedVideoID}
-                on:change={fetchVideoFrames(selectedVideoID)}
+                on:change={() => {refreshScreen()}}
             >
                 {#each $projectVideos as video}
                     <option value={video.id}>{video.name}</option>

@@ -104,7 +104,7 @@ export const fetchLabels = async (projectID) => {
 /*************************************************************/
 // Function for sending updated boxes to the backend
 /*************************************************************/
-export const sendUpdatedBoundingBoxes = async () => { 
+export const sendUpdatedBoundingBoxes = async (selectedProjectID, selectedVideoID) => { 
     // Determine which boxes were edited
     let editedBoxes = get(currentBoxes).filter(box => box.edited === true);
 
@@ -112,8 +112,17 @@ export const sendUpdatedBoundingBoxes = async () => {
     // by the backend and only the frontend needs to know about it
     editedBoxes = editedBoxes.map(({ edited, ...box }) => box);
 
-    // Send only the edited boxes
-    await fetch(`http://localhost:${server_port}/boundingboxes`, {
+    // Make sure to send project_id and video_id as well
+    // let requestBody = {
+    //     "project_id": selectedProjectID,
+    //     "video_id": selectedVideoID,
+    //     "updated_boxes": editedBoxes
+    // }
+    // console.log("Trying to send:", JSON.stringify(requestBody))
+
+    // Send only the edited boxes and specify query parameters to update the boxes
+    // in the correct project and video
+    await fetch(`http://localhost:${server_port}/boundingboxes?project_id=${selectedProjectID}&video_id=${selectedVideoID}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

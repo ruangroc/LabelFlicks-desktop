@@ -19,13 +19,11 @@
 	}
 
     function submit() {
-        if (selectedLabel === displayedLabel) 
-            return;
-
         $currentBoxes[boxIndex].label_id = $nameToLabelId[selectedLabel];
         displayedLabel = selectedLabel;
         labelDisplayLength = displayedLabel.length * 6;
         $currentBoxes[boxIndex].edited = true;
+        $currentBoxes[boxIndex].prediction = false;
 		isEditing = false;
 	}
 </script>
@@ -34,7 +32,7 @@
 <g transform="translate({bbox.x_top_left * widthRatio}, {bbox.y_top_left * heightRatio})">
     <!-- the rectangle is the actual drawn bounding box -->
     <rect 
-        class="bounding-box" 
+        class={bbox.prediction ? "predicted" : "bounding-box"} 
         x="0"
         y="0"
         width="{bbox.width * widthRatio}" 
@@ -43,7 +41,7 @@
 
     <!-- write out the label name at the top of each bounding box -->
     {#if !isEditing}
-        <rect class="bounding-box-label-bg" x="0" y="-9" width="{labelDisplayLength}" height="9" />
+        <rect class={bbox.prediction ? "predicted-label-bg" : "bounding-box-label-bg"} x="0" y="-9" width="{labelDisplayLength}" height="9" />
         <text 
             class="bounding-box-label" 
             on:click={() => isEditing = true}
@@ -81,5 +79,14 @@
         fill-opacity: 0.9;
         font-size: 9px;
         font-family: monospace;
+    }
+    rect.predicted {
+        stroke: red;
+        fill: red;
+        fill-opacity: 0.1;
+    }
+    rect.predicted-label-bg {
+        fill: red;
+        fill-opacity: 0.8;
     }
 </style>
