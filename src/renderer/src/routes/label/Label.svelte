@@ -18,8 +18,9 @@
 
     let showLoadingSymbol = true;
     let selectedVideoID = $projectVideos[0].id;
-    let selectedFrame = {};
+    // let selectedFrame = {};
     let frameIndex = 0;
+    $: selectedFrame = $videoFrames[frameIndex];
     let defaultStyle =
         "border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm";
     let paused = true;
@@ -124,7 +125,7 @@
         </div>
     </div>
 
-    {#if showLoadingSymbol || !$videoFrames}
+    {#if showLoadingSymbol || !$videoFrames || !selectedFrame}
         <Stretch size="60" color="#FF3E00" unit="px" duration="1s" />
     {:else}
         <div class="grid grid-cols-2">
@@ -211,7 +212,7 @@
                     </button>
                 </div>
 
-                <Timeline />
+                <Timeline bind:frameIndex />
             </div>
         </div>
     {/if}

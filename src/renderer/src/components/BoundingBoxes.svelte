@@ -33,7 +33,7 @@
 </script>
 
 
-{#if displayBoxes}
+{#if displayBoxes && selectedFrame}
     <svg
         id="bounding-box-container"
         width="{renderedFrameProperties.width}px"
