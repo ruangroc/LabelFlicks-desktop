@@ -176,3 +176,18 @@ export const updateReviewedFrames = async () => {
         body: JSON.stringify(frames)
     });
 };
+
+
+/*************************************************************/
+// Create new label for this project
+/*************************************************************/
+export const createLabel = async (selectedProjectID, newLabelName) => { 
+    await fetch(`http://localhost:${server_port}/projects/${selectedProjectID}/labels`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(Array(newLabelName))
+    });
+};

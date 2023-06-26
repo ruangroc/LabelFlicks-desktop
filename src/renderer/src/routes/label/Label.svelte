@@ -11,11 +11,13 @@
         sendUpdatedBoundingBoxes,
         updateBoundingBoxesNoPredictions,
         updateReviewedFrames,
+        createLabel,
     } from "../../stores/labeling";
     import { onMount } from "svelte";
     import { Stretch } from "svelte-loading-spinners";
     import BoundingBoxes from "../../components/BoundingBoxes.svelte";
     import Timeline from "../../components/Timeline.svelte";
+    import Modal from "../../components/Modal.svelte";
 
     let showLoadingSymbol = true;
     let selectedVideoID = $projectVideos[0].id;
@@ -26,6 +28,8 @@
         "border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm";
     let paused = true;
     let autoPlayTimeout;
+    let showCreateLabelModal = false;
+    let newLabelName = "";
 
     onMount(async () => {
         await refreshScreen(0);
@@ -84,6 +88,13 @@
         await fetchVideoFrames(selectedVideoID);
         await fetchBoundingBoxes(selectedFrame.id);
         showLoadingSymbol = false;
+    }
+
+    async function createNewLabel() {
+        await createLabel($selectedProject.id, newLabelName);
+		showCreateLabelModal = false;
+		newLabelName = "";
+        await refreshScreen(frameIndex);
     }
 </script>
 
@@ -213,10 +224,43 @@
                     </h2>
                     <button
                         class="border-solid border-2 border-gray-400 ml-auto p-1 rounded text-sm"
+                        on:click={() => showCreateLabelModal = true}
                     >
                         Add Label
                     </button>
                 </div>
+
+                {#if showCreateLabelModal}
+                <Modal>
+                    <h2 slot="header">
+                        Create a New Label
+                    </h2>
+                
+                    <div slot="body">
+                        <div class="flex flex-row flex-wrap w-full justify-start mb-2 py-1">
+                            <h1 class="text-left text-lg font-semibold w-full my-1">
+                                Label Name
+                            </h1>
+                            <input
+                                type="text"
+                                placeholder="project-name"
+                                bind:value={newLabelName}
+                                class="w-full h-8 rounded bg-gray-200 p-2 text-md"
+                            />
+                        </div>
+                    
+                        <button 
+                            class="bg-gray-300 hover:bg-gray-400 ml-auto p-2 rounded" 
+                            on:click={() => showCreateLabelModal = false}
+                        >
+                            Cancel
+                        </button>
+                        <button class="bg-green-300 hover:bg-green-400 ml-3 p-2 rounded" on:click={createNewLabel}>
+                            Create Label
+                        </button>
+                    </div>
+                </Modal>
+                {/if}
 
                 <Timeline bind:frameIndex />
             </div>
