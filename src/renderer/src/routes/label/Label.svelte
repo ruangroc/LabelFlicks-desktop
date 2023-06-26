@@ -10,6 +10,7 @@
         fetchLabels,
         sendUpdatedBoundingBoxes,
         updateBoundingBoxesNoPredictions,
+        updateReviewedFrames,
     } from "../../stores/labeling";
     import { onMount } from "svelte";
     import { Stretch } from "svelte-loading-spinners";
@@ -18,26 +19,30 @@
 
     let showLoadingSymbol = true;
     let selectedVideoID = $projectVideos[0].id;
-    // let selectedFrame = {};
-    let frameIndex = 0;
-    $: selectedFrame = $videoFrames[frameIndex];
+    let selectedFrame = {};
+    let frameIndex;
+    $: refreshFrame(frameIndex);
     let defaultStyle =
         "border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm";
     let paused = true;
     let autoPlayTimeout;
 
     onMount(async () => {
-        await refreshScreen();
+        await refreshScreen(0);
     });
 
-    async function refreshScreen() {
+    async function refreshScreen(frame_index) {
         showLoadingSymbol = true;
         await fetchLabels($selectedProject.id);
         await fetchVideoFrames(selectedVideoID);
-        frameIndex = 0;
+        refreshFrame(frame_index);
+        showLoadingSymbol = false;
+    }
+
+    async function refreshFrame(frame_index) {
+        frameIndex = frame_index;
         selectedFrame = $videoFrames[frameIndex];
         await fetchBoundingBoxes(selectedFrame.id);
-        showLoadingSymbol = false;
     }
 
     async function changeFrame(value) {
@@ -49,6 +54,7 @@
             $videoFrames[frameIndex].human_reviewed = true;
             $currentBoxes.forEach(box => box.prediction = false);
             await updateBoundingBoxesNoPredictions();
+            await updateReviewedFrames();
         }
 
         // Then move onto the next frame
@@ -105,7 +111,7 @@
             <select
                 name="select-video"
                 bind:value={selectedVideoID}
-                on:change={() => {refreshScreen()}}
+                on:change={() => {refreshScreen(0)}}
             >
                 {#each $projectVideos as video}
                     <option value={video.id}>{video.name}</option>

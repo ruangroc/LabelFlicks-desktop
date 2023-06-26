@@ -155,3 +155,24 @@ export const updateBoundingBoxesNoPredictions = async () => {
         body: JSON.stringify(boxes)
     });
 };
+
+
+/*************************************************************/
+// Function for sending reviewed frames to the backend
+/*************************************************************/
+export const updateReviewedFrames = async () => { 
+    // Drop the "edited" property from each box as it won't be accepted
+    // by the backend and only the frontend needs to know about it
+    let frames = get(videoFrames);
+
+    // Send only the edited boxes and specify query parameters to update the boxes
+    // in the correct project and video
+    await fetch(`http://localhost:${server_port}/frames`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(frames)
+    });
+};
