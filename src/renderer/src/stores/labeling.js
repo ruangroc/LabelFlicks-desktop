@@ -93,7 +93,9 @@ export const fetchLabels = async (projectID) => {
     try {
         const response = await fetch(`http://localhost:${server_port}/projects/${projectID}/labels`);
         const data = await response.json();
-        projectLabels.set(data.labels);
+        // add property to denote when boxes with specified labels should be hidden
+        let labelsWithHiddenField = data.labels.map(box => ({ ...box, "hidden": false }));
+        projectLabels.set(labelsWithHiddenField);
     }
     catch (error) {
         console.log("Error in fetchLabels:", error);

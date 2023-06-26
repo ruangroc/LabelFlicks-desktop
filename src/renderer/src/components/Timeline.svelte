@@ -1,6 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import { videoFrames, projectLabels } from "../stores/labeling";
+    import { loop_guard } from "svelte/internal";
 
     // total frames = videoFrames.length
     // projectLabels = list of unique labels
@@ -34,6 +35,7 @@
             frameWidth = timelineWidth / $videoFrames.length;
         }
     }
+
 </script>
 
 {#if displayLabels}
@@ -44,11 +46,21 @@
                 <button class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm">
                     Rename
                 </button>
-                <button class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm">
+                <!-- <button class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm">
                     Color
-                </button>
+                </button> -->
                 <button class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm">
                     Delete
+                </button>
+                <button 
+                    class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm" 
+                    on:click={() => label.hidden = !label.hidden}
+                >
+                    {#if label.hidden}
+                    Show
+                    {:else}
+                    Hide
+                    {/if}
                 </button>
             </div>
             <!-- <div class="w-full h-4 bg-gray-300 mt-1 mb-4"></div> -->
@@ -59,14 +71,19 @@
                     height="{timelineHeight}px"
                 >
                     {#each $videoFrames as frame, frame_index}
-                            <rect 
-                                x="{frame_index * frameWidth}"
-                                y="0"
-                                width="{frameWidth}px" 
-                                height="{timelineHeight}px"
-                                class={frame.labels.find(x => x === label.id) ? colors[label_index % colors.length] : "fill-gray-300"}
-                            >
-                            </rect>
+                        {console.log(frame)}
+                        <rect 
+                            x="{frame_index * frameWidth}"
+                            y="0"
+                            width="{frameWidth}px" 
+                            height="{timelineHeight}px"
+                            class={
+                                (frame.labels.find(x => x === label.id) && frame.human_reviewed === false) ? colors[label_index % colors.length] + " stroke-red-500 stroke-2" : 
+                                (frame.labels.find(x => x === label.id) ? colors[label_index % colors.length] : "fill-gray-300")
+                            }
+                        >
+                            <title>{frame.human_reviewed === false ? "Unreviewed" : "Reviewed"}</title>
+                        </rect>
                     {/each}
                 </svg>
             </div>

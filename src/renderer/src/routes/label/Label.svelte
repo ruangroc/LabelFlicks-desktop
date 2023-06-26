@@ -45,7 +45,7 @@
         // i.e. all boxes look good to the user 
         // but only if moving forward in the video, not back
         if (Number(value) > 0) {
-            $videoFrames[frameIndex].humanReviewed = true;
+            $videoFrames[frameIndex].human_reviewed = true;
             $currentBoxes.forEach(box => box.prediction = false);
             await updateBoundingBoxesNoPredictions();
         }

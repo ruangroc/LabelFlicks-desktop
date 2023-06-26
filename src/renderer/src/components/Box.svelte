@@ -10,6 +10,7 @@
     let selectedLabel = "";
     let displayedLabel = $labelIdToName[bbox.label_id];
     let labelDisplayLength = displayedLabel.length * 6;
+    let projectLabelIndex = $projectLabels.findIndex(label => label.name === displayedLabel);
 
     function keydown(event) {
 		if (event.key == 'Escape') {
@@ -28,41 +29,46 @@
 	}
 </script>
 
-<!-- translate(x,y) moves the box to where the detected object is -->
-<g transform="translate({bbox.x_top_left * widthRatio}, {bbox.y_top_left * heightRatio})">
-    <!-- the rectangle is the actual drawn bounding box -->
-    <rect 
-        class={bbox.prediction ? "predicted" : "bounding-box"} 
-        x="0"
-        y="0"
-        width="{bbox.width * widthRatio}" 
-        height="{bbox.height * heightRatio}">
-    </rect>
 
-    <!-- write out the label name at the inner left top corner of each bounding box -->
-    {#if !isEditing}
-        <rect class={bbox.prediction ? "predicted-label-bg" : "bounding-box-label-bg"} x="0" y="0" width="{labelDisplayLength}" height="9" />
-        <text 
-            class="bounding-box-label" 
-            x="0" y="6"
-            on:click={() => isEditing = true}
-            on:keypress={() => isEditing = true}
-        >
-            {displayedLabel}
-        </text>
-    {:else}
-        <foreignObject width="400" height="400" x="0" y="-9">
-            <form on:submit|preventDefault={submit} on:keydown={keydown}>
-                <select class="select-label" style="width:{labelDisplayLength + 15}px; " bind:value={selectedLabel} on:change={submit} required name="label">
-                    <!-- <option disabled selected value="select">Select a new label</option> -->
-                    {#each $projectLabels as label}
-                        <option value={label.name}>{label.name}</option>
-                    {/each}
-                </select>
-            </form>
-        </foreignObject>
-    {/if}
-</g>
+<!-- Display the box only if its corresponding labeling timeline is not hidden -->
+{#if $projectLabels && $projectLabels[projectLabelIndex] && !$projectLabels[projectLabelIndex].hidden}
+
+    <!-- translate(x,y) moves the box to where the detected object is -->
+    <g transform="translate({bbox.x_top_left * widthRatio}, {bbox.y_top_left * heightRatio})">
+        <!-- the rectangle is the actual drawn bounding box -->
+        <rect 
+            class={bbox.prediction ? "predicted" : "bounding-box"} 
+            x="0"
+            y="0"
+            width="{bbox.width * widthRatio}" 
+            height="{bbox.height * heightRatio}">
+        </rect>
+
+        {#if !isEditing}
+            <!-- write out the label name at the inner left top corner of each bounding box -->
+            <rect class={bbox.prediction ? "predicted-label-bg" : "bounding-box-label-bg"} x="0" y="0" width="{labelDisplayLength}" height="9" />
+            <text 
+                class="bounding-box-label" 
+                x="0" y="6"
+                on:click={() => isEditing = true}
+                on:keypress={() => isEditing = true}
+            >
+                {displayedLabel}
+            </text>
+        {:else}
+            <foreignObject width="400" height="400" x="0" y="-9">
+                <form on:submit|preventDefault={submit} on:keydown={keydown}>
+                    <select class="select-label" style="width:{labelDisplayLength + 15}px; " bind:value={selectedLabel} on:change={submit} required name="label">
+                        <!-- <option disabled selected value="select">Select a new label</option> -->
+                        {#each $projectLabels as label}
+                            <option value={label.name}>{label.name}</option>
+                        {/each}
+                    </select>
+                </form>
+            </foreignObject>
+        {/if}
+    </g>
+{/if}
 
 
 <style>
