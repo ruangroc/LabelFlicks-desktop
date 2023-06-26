@@ -40,7 +40,7 @@
         height="{renderedFrameProperties.height}px"
     >
         {#each $currentBoxes as bbox, boxIndex}
-            <Box bbox={bbox} widthRatio={widthRatio} heightRatio={heightRatio} boxIndex={boxIndex} />
+            <Box bbox={bbox} widthRatio={widthRatio} heightRatio={heightRatio} boxIndex={boxIndex} selectedFrameID={selectedFrame.id} />
         {/each}
     </svg>
 {/if}

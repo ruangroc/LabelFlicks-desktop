@@ -32,7 +32,8 @@
     let newLabelName = "";
 
     onMount(async () => {
-        await refreshScreen(0);
+        frameIndex = 0;
+        await refreshScreen(frameIndex);
     });
 
     async function refreshScreen(frame_index) {
@@ -130,7 +131,7 @@
             </select>
         </div>
         <div class="w-full py-1">
-            {#if showLoadingSymbol && $videoFrames && $percentReviewedFrames}
+            {#if !showLoadingSymbol && $videoFrames && $percentReviewedFrames}
             <p>
                 {$percentReviewedFrames}% of {$videoFrames.length} total frames reviewed
             </p>

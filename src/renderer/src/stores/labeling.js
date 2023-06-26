@@ -61,7 +61,15 @@ export const fetchVideoFrames = async (videoID) => {
     try {
         const response = await fetch(`http://localhost:${server_port}/videos/${videoID}/frames`);
         const data = await response.json();
-        videoFrames.set(data.frames);
+
+        // Frames may be out of order, so put them back in order according to the
+        // frame_url path stored with each frame
+        let framesWithIDField = data.frames.map(frame => ({ ...frame, "sort_id": frame.frame_url.split("/").at(-1).replace(".jpg", "") }));
+        framesWithIDField.sort((a, b) => parseInt(a.sort_id) - parseInt(b.sort_id));
+
+        // Then drop the "sort_id" field from each frame before storing them
+        let framesWithoutSortID = framesWithIDField.map(({ sort_id, ...frame }) => frame);
+        videoFrames.set(framesWithoutSortID);
     }
     catch (error) {
         console.log("Error in fetchVideoFrames:", error);
@@ -189,5 +197,15 @@ export const createLabel = async (selectedProjectID, newLabelName) => {
             'Accept': 'application/json'
         },
         body: JSON.stringify(Array(newLabelName))
+    });
+};
+
+
+/*************************************************************/
+// Create new label for this project
+/*************************************************************/
+export const deleteBox = async (selectedBoxID) => { 
+    await fetch(`http://localhost:${server_port}/boundingboxes/${selectedBoxID}`, {
+        method: 'DELETE'
     });
 };

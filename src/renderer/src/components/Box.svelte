@@ -1,10 +1,11 @@
 <script>
-    import { labelIdToName, nameToLabelId, projectLabels, currentBoxes } from "../stores/labeling";
+    import { labelIdToName, nameToLabelId, projectLabels, currentBoxes, deleteBox, fetchBoundingBoxes } from "../stores/labeling";
 
     export let bbox;
     export let widthRatio;
     export let heightRatio;
     export let boxIndex;
+    export let selectedFrameID;
 
     let isEditing = false;
     let selectedLabel = "";
@@ -54,6 +55,17 @@
                 on:keypress={() => isEditing = true}
             >
                 {displayedLabel}
+            </text>
+
+            <!-- Write out an X for the delete button -->
+            <rect class={bbox.prediction ? "predicted-label-bg" : "bounding-box-label-bg"} x="0" y="{bbox.height * heightRatio - 9}" width="35" height="9" />
+            <text
+                class="bounding-box-label" 
+                x="0" y="{bbox.height * heightRatio - 2}"
+                on:click={() => {deleteBox(bbox.id); fetchBoundingBoxes(selectedFrameID);}}
+                on:keypress={() => {deleteBox(bbox.id); fetchBoundingBoxes(selectedFrameID);}}
+            >
+                delete
             </text>
         {:else}
             <foreignObject width="400" height="400" x="0" y="-9">
