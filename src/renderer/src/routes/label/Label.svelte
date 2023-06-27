@@ -30,6 +30,8 @@
     let autoPlayTimeout;
     let showCreateLabelModal = false;
     let newLabelName = "";
+    let labelDeleted = false;
+    $: submitHumanEdits(labelDeleted);
 
     onMount(async () => {
         frameIndex = 0;
@@ -81,13 +83,13 @@
         else autoPlayFrames();
     }
 
-    async function submitHumanEdits() {
+    async function submitHumanEdits(labelDeleted=false) {
         showLoadingSymbol = true;
         await sendUpdatedBoundingBoxes($selectedProject.id, selectedVideoID);
 
         // Get the updated unique labels per frame
-        await fetchVideoFrames(selectedVideoID);
-        await fetchBoundingBoxes(selectedFrame.id);
+        if (labelDeleted) labelDeleted = false;
+        refreshScreen(frameIndex);
         showLoadingSymbol = false;
     }
 
@@ -263,7 +265,7 @@
                 </Modal>
                 {/if}
 
-                <Timeline bind:frameIndex />
+                <Timeline bind:frameIndex bind:labelDeleted />
             </div>
         </div>
     {/if}

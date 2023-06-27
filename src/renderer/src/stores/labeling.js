@@ -202,10 +202,20 @@ export const createLabel = async (selectedProjectID, newLabelName) => {
 
 
 /*************************************************************/
-// Create new label for this project
+// Delete the specified bounding box
 /*************************************************************/
 export const deleteBox = async (selectedBoxID) => { 
     await fetch(`http://localhost:${server_port}/boundingboxes/${selectedBoxID}`, {
+        method: 'DELETE'
+    });
+};
+
+
+/*************************************************************/
+// Delete the specified label
+/*************************************************************/
+export const deleteLabel = async (selectedProjectID, selectedLabelID) => { 
+    await fetch(`http://localhost:${server_port}/projects/${selectedProjectID}/labels/${selectedLabelID}`, {
         method: 'DELETE'
     });
 };

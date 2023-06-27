@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
-    import { videoFrames, projectLabels } from "../stores/labeling";
-    import { loop_guard } from "svelte/internal";
+    import { videoFrames, projectLabels, deleteLabel } from "../stores/labeling";
+    import { selectedProject } from "../stores/projects";
 
     // total frames = videoFrames.length
     // projectLabels = list of unique labels
@@ -14,6 +14,7 @@
     // should be one pass through the frames array
 
     export let frameIndex;
+    export let labelDeleted;
     let displayLabels = false;
     let timelineWidth = 0;
     let timelineHeight = 20;
@@ -37,6 +38,12 @@
         }
     }
 
+    async function handleDeleteLabel(labelId) {
+        console.log("Label ID:", labelId);
+        await deleteLabel($selectedProject.id, labelId);
+        labelDeleted = true;
+    }
+
 </script>
 
 {#if displayLabels}
@@ -47,7 +54,10 @@
                 <button class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm">
                     Rename
                 </button>
-                <button class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm">
+                <button 
+                    class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm"
+                    on:click={() => handleDeleteLabel(label.id)}
+                >
                     Delete
                 </button>
                 <button 
