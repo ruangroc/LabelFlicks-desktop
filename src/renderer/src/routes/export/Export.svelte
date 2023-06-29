@@ -1,28 +1,17 @@
 <script>
 	import Table from "../../components/Table.svelte";
-	import { status } from "../../types.ts";
+    import { selectedProject, downloadAnnotations } from "../../stores/projects";
+	import { videosExportTableData } from "../../stores/videos";
+	import { Stretch } from 'svelte-loading-spinners';
 
-	let mockExportData = [
-		{
-			Name: "my-video-1.mp4",
-			"Annotated Images": status.NotStarted,
-			"Feature Vectors": status.InProgress,
-			"Bounding Boxes": status.Done,
-		},
-		{
-			Name: "my-video-2.mp4",
-			"Annotated Images": status.NotStarted,
-			"Feature Vectors": status.InProgress,
-			"Bounding Boxes": status.Done,
-		},
-		{
-			Name: "my-video-3.mp4",
-			"Annotated Images": status.NotStarted,
-			"Feature Vectors": status.InProgress,
-			"Bounding Boxes": status.Done,
-		},
-	];
 	let alignData = "text-center";
+	let showLoadingSymbol = false;
+
+	async function handleDownload() {
+		const data = await downloadAnnotations($selectedProject.id);
+		let savePath = data["annotations-path"].replaceAll("\\", "/");
+		alert("Frame images and annotations saved here: \n" + savePath);
+	}
 </script>
 
 <div class="flex flex-col items-center w-3/4 mx-auto mt-2">
@@ -35,15 +24,25 @@
 		>
 	</div>
 
-	<div class="flex flex-row w-full justify-start mb-6">
-		<h1 class="text-center text-lg font-semibold mr-3 py-2">
-			Select items you would like to save
+	<div class="flex items-center w-full flex-row mt-4 mb-6">
+		<h1 class="text-center text-lg font-semibold">
+			Videos in your project
 		</h1>
-		<button class="bg-green-300 mr-3 p-2 rounded">Download All</button>
-		<button class="bg-green-300 mr-auto p-2 rounded"
-			>Download Selected</button
+
+		<button 
+			class="bg-green-300 ml-auto p-2 rounded"
+			on:click={handleDownload}
 		>
+			Download annotations for project: {$selectedProject.name}
+		</button>
 	</div>
 
-	<Table tableData={mockExportData} {alignData} />
+	{#if $videosExportTableData.length > 0}
+        {#if showLoadingSymbol}
+            <Stretch size="60" color="#FF3E00" unit="px" duration="1s" />
+        {:else}
+            <Table tableData={$videosExportTableData} {alignData} />
+        {/if}
+    {/if}
+	
 </div>

@@ -11,7 +11,8 @@ export const projectVideos = writable([]);
 
 
 /*************************************************************/
-// Data derived from projectVideos store, transforms data to look good in the videos table
+// Data derived from projectVideos store, transforms data to 
+// look good in the videos table on the Upload page
 /*************************************************************/
 export const videosTableData = derived(projectVideos, ($projectVideos) => {
     // desired format = [
@@ -26,6 +27,27 @@ export const videosTableData = derived(projectVideos, ($projectVideos) => {
     return $projectVideos.map(video => ({
         "Name": video.name,
         "Date Uploaded": String(video.date_uploaded),
+        "Percent Labeled": video.percent_labeled + "%",
+        "Number of Frames": String(video.number_of_frames),
+    }));
+});
+
+
+/*************************************************************/
+// Data derived from projectVideos store, transforms data to 
+// look good in the videos table on the Export page
+/*************************************************************/
+export const videosExportTableData = derived(projectVideos, ($projectVideos) => {
+    // desired format = [
+	// 	{
+	// 		"Name": "my-video-1.mp4",
+	// 		"Percent Labeled": "18%",
+    //      "Number of Frames": "100"
+	// 	},
+    // ...
+	// ];
+    return $projectVideos.map(video => ({
+        "Name": video.name,
         "Percent Labeled": video.percent_labeled + "%",
         "Number of Frames": String(video.number_of_frames),
     }));

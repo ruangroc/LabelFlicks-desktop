@@ -107,7 +107,7 @@
             ><a href="/">Save</a></button
         >
         <button class="bg-green-300 ml-3 p-2 rounded"
-            ><a href="#/preprocess">Done Labeling</a></button
+            ><a href="#/export">Done Labeling</a></button
         >
     </div>
 
