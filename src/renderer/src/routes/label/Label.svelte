@@ -56,7 +56,7 @@
 
     async function changeFrame(value) {
         if (selectedFrame === {}) return;
-        if (frameIndex === $videoFrames.length - 1) {
+        if (frameIndex === $videoFrames.length - 1 && value > 0) {
             paused = true;
             return;
         }

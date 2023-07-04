@@ -92,12 +92,14 @@
     rect.bounding-box-label-bg {
         fill: blue;
         fill-opacity: 0.8;
+        cursor: pointer;
     }
     text.bounding-box-label {
         fill: white;
         fill-opacity: 0.9;
         font-size: 9px;
         font-family: monospace;
+        cursor: pointer;
     }
     rect.predicted {
         stroke: red;
@@ -107,5 +109,6 @@
     rect.predicted-label-bg {
         fill: red;
         fill-opacity: 0.8;
+        cursor: pointer;
     }
 </style>
