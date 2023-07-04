@@ -47,12 +47,20 @@
     }
 
     async function refreshFrame(frame_index) {
+        if (selectedFrame === {}) return;
+
         frameIndex = frame_index;
         selectedFrame = $videoFrames[frameIndex];
         await fetchBoundingBoxes(selectedFrame.id);
     }
 
     async function changeFrame(value) {
+        if (selectedFrame === {}) return;
+        if (frameIndex === $videoFrames.length - 1) {
+            paused = true;
+            return;
+        }
+
         // Once the frame changes and no additional edits are made,
         // assume all boxes in frame have been human-reviewed 
         // i.e. all boxes look good to the user 
@@ -161,8 +169,8 @@
                     <BoundingBoxes bind:selectedFrame />
                 </div>
 
-                <div class="my-1 grid grid-cols-4">
-                    <div class="col-span-1 mx-auto">
+                <div class="my-1 grid grid-cols-5">
+                    <div class="col-span-2 mx-auto text-left">
                         <p class="mr-6">
                             Frame: {selectedFrame
                                 ? selectedFrame.frame_url.split("/").at(-1)
