@@ -15,6 +15,7 @@
 
     export let frameIndex;
     export let labelDeleted;
+
     let displayLabels = false;
     let timelineWidth = 0;
     let timelineHeight = 20;
@@ -43,7 +44,6 @@
         await deleteLabel($selectedProject.id, labelId);
         labelDeleted = true;
     }
-
 </script>
 
 {#if displayLabels}

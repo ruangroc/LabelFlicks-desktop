@@ -30,7 +30,6 @@
 	}
 </script>
 
-
 <!-- Display the box only if its corresponding labeling timeline is not hidden -->
 {#if $projectLabels && $projectLabels[projectLabelIndex] && !$projectLabels[projectLabelIndex].hidden}
 
@@ -81,7 +80,6 @@
         {/if}
     </g>
 {/if}
-
 
 <style>
     rect.bounding-box {
