@@ -5,8 +5,6 @@
 	import { projectVideos, preprocessingTableData, fetchVideos, restartVideoPreprocessing } from "../../stores/videos";
     import { onMount } from "svelte";
 
-	let alignData = "text-center";
-
 	let preprocessingCompleted = false;
 	
 	// Upon any change to the preprocessing data store, check statuses
@@ -59,7 +57,7 @@
 			Preprocessing your videos, please be patient...
 		</h1>
 	</div>
-	<Table tableData={$preprocessingTableData} {alignData} />
+	<Table tableData={$preprocessingTableData} />
 </div>
 
 <style>

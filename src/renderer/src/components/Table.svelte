@@ -3,7 +3,6 @@
 	import { status } from "../types.ts";
 
 	export let tableData = [];
-	export let alignData = "text-left"; // can be text-left or text-center
 	export let onClick = () => {};
 	$: numHeadings = Object.keys(tableData[0]).length;
 </script>

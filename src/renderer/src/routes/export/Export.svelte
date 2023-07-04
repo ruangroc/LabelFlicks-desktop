@@ -4,7 +4,6 @@
 	import { videosExportTableData } from "../../stores/videos";
 	import { Stretch } from 'svelte-loading-spinners';
 
-	let alignData = "text-center";
 	let showLoadingSymbol = false;
 
 	async function handleDownload() {
@@ -41,7 +40,7 @@
         {#if showLoadingSymbol}
             <Stretch size="60" color="#FF3E00" unit="px" duration="1s" />
         {:else}
-            <Table tableData={$videosExportTableData} {alignData} />
+            <Table tableData={$videosExportTableData} />
         {/if}
     {/if}
 	
