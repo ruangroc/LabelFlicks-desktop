@@ -204,11 +204,11 @@
                     </div>
 
                     <div class="col-span-1 mx-auto">
-                        <button
+                        <!-- <button
                             class="border-solid border-2 border-gray-400 mr-1 p-1 rounded text-sm"
                         >
                             Add Bounding Box
-                        </button>
+                        </button> -->
                         <button
                             class="border-solid border-2 border-gray-400 mr-1 p-1 rounded text-sm"
                             on:click={submitHumanEdits}
