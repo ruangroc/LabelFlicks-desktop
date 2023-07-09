@@ -15,7 +15,6 @@
     let projectLabelIndex = $projectLabels.findIndex(label => label.name === displayedLabel);
 </script>
 
-
 <!-- Display the box only if its corresponding labeling timeline is not hidden -->
 {#if $projectLabels && $projectLabels[projectLabelIndex] && !$projectLabels[projectLabelIndex].hidden}
 

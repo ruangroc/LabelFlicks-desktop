@@ -3,7 +3,7 @@
 	import { status } from "../../types.ts";
 	import { selectedProject } from "../../stores/projects";
 	import { projectVideos, preprocessingTableData, fetchVideos, restartVideoPreprocessing } from "../../stores/videos";
-    import { onMount } from "svelte";
+  import { onMount } from "svelte";
 
 	let preprocessingCompleted = false;
 	
