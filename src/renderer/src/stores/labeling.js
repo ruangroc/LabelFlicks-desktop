@@ -132,14 +132,19 @@ export const sendUpdatedBoundingBoxes = async (selectedProjectID, selectedVideoI
 
     // Send only the edited boxes and specify query parameters to update the boxes
     // in the correct project and video
-    await fetch(`http://localhost:${server_port}/boundingboxes?project_id=${selectedProjectID}&video_id=${selectedVideoID}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify(editedBoxes)
-    });
+    try {
+        await fetch(`http://localhost:${server_port}/boundingboxes?project_id=${selectedProjectID}&video_id=${selectedVideoID}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(editedBoxes)
+        });
+    }
+    catch (error) {
+        console.log("Error in sendUpdatedBoundingBoxes:", error);
+    }
 };
 
 
@@ -154,14 +159,19 @@ export const updateBoundingBoxesNoPredictions = async () => {
 
     // Send only the edited boxes and specify query parameters to update the boxes
     // in the correct project and video
-    await fetch(`http://localhost:${server_port}/boundingboxes`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify(boxes)
-    });
+    try {
+        await fetch(`http://localhost:${server_port}/boundingboxes`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(boxes)
+        });
+    }
+    catch (error) {
+        console.log("Error in updateBoundingBoxesNoPredictions:", error);
+    }
 };
 
 
@@ -175,14 +185,19 @@ export const updateReviewedFrames = async () => {
 
     // Send only the edited boxes and specify query parameters to update the boxes
     // in the correct project and video
-    await fetch(`http://localhost:${server_port}/frames`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify(frames)
-    });
+    try {
+        await fetch(`http://localhost:${server_port}/frames`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(frames)
+        });
+    }
+    catch (error) {
+        console.log("Error in updateReviewedFrames:", error);
+    }
 };
 
 
@@ -190,14 +205,19 @@ export const updateReviewedFrames = async () => {
 // Create new label for this project
 /*************************************************************/
 export const createLabel = async (selectedProjectID, newLabelName) => { 
-    await fetch(`http://localhost:${server_port}/projects/${selectedProjectID}/labels`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify(Array(newLabelName))
-    });
+    try {
+        await fetch(`http://localhost:${server_port}/projects/${selectedProjectID}/labels`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(Array(newLabelName))
+        });
+    }
+    catch (error) {
+        console.log("Error in createLabel:", error);
+    }
 };
 
 
@@ -205,9 +225,14 @@ export const createLabel = async (selectedProjectID, newLabelName) => {
 // Delete the specified bounding box
 /*************************************************************/
 export const deleteBox = async (selectedBoxID) => { 
-    await fetch(`http://localhost:${server_port}/boundingboxes/${selectedBoxID}`, {
-        method: 'DELETE'
-    });
+    try {
+        await fetch(`http://localhost:${server_port}/boundingboxes/${selectedBoxID}`, {
+            method: 'DELETE'
+        });
+    }
+    catch (error) {
+        console.log("Error in deleteBox:", error);
+    }
 };
 
 
@@ -215,7 +240,12 @@ export const deleteBox = async (selectedBoxID) => {
 // Delete the specified label
 /*************************************************************/
 export const deleteLabel = async (selectedProjectID, selectedLabelID) => { 
-    await fetch(`http://localhost:${server_port}/projects/${selectedProjectID}/labels/${selectedLabelID}`, {
-        method: 'DELETE'
-    });
+    try {
+        await fetch(`http://localhost:${server_port}/projects/${selectedProjectID}/labels/${selectedLabelID}`, {
+            method: 'DELETE'
+        });
+    }
+    catch (error) {
+        console.log("Error in deleteLabel:", error);
+    }
 };
