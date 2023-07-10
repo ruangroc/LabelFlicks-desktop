@@ -1,20 +1,7 @@
 <script>
     import { onMount } from "svelte";
-    import { videoFrames, projectLabels, deleteLabel } from "../stores/labeling";
+    import { videoFrames, projectLabels, deleteLabel, selectedFrameIndex } from "../stores/labeling";
     import { selectedProject } from "../stores/projects";
-
-    // total frames = videoFrames.length
-    // projectLabels = list of unique labels
-    // videoFrames = list of frames and the labels detected in each
-
-    // figure out total slots and width of each slot (to represent one frame)
-    // for each unique label, determine whether each frame should be colored
-
-    // probably will need to scale this somehow for longer videos, but
-    // should be one pass through the frames array
-
-    export let frameIndex;
-    export let labelDeleted;
 
     let displayLabels = false;
     let timelineWidth = 0;
@@ -28,13 +15,18 @@
 
     function pollTitleRenderStatus() {
         let element = document.getElementById("labels-title-row");
+        if (!element) {
+            setTimeout(pollTitleRenderStatus, 100);
+            return;
+        }
         let rendered = element.getBoundingClientRect().width;
         if (!rendered) {
             setTimeout(pollTitleRenderStatus, 100);
+            return;
         }
         else {
             displayLabels = true;
-            timelineWidth = document.getElementById("labels-title-row").getBoundingClientRect().width;
+            timelineWidth = 0.9 * document.getElementById("labels-title-row").getBoundingClientRect().width;
             frameWidth = timelineWidth / $videoFrames.length;
         }
     }
@@ -42,12 +34,13 @@
     async function handleDeleteLabel(labelId) {
         console.log("Label ID:", labelId);
         await deleteLabel($selectedProject.id, labelId);
-        labelDeleted = true;
+        // labelDeleted = true;
+        await fetchLabels($selectedProject.id);
     }
 </script>
 
 {#if displayLabels}
-    <div class="flex flex-col">
+    <div class="flex flex-col overflow-auto h-4/5">
         {#each $projectLabels as label, label_index}
             <div class="flex flex-row">
                 <p class="mr-4">{label.name}</p>
@@ -71,7 +64,6 @@
                     {/if}
                 </button>
             </div>
-            <!-- <div class="w-full h-4 bg-gray-300 mt-1 mb-4"></div> -->
             <div class="timeline-wrap mt-1 mb-4">
                 <svg
                     id="timeline-container"
@@ -88,8 +80,8 @@
                                 (frame.labels.find(x => x === label.id) && frame.human_reviewed === false) ? colors[label_index % colors.length] + " stroke-red-500 stroke-2" : 
                                 (frame.labels.find(x => x === label.id) ? colors[label_index % colors.length] : "fill-gray-300")
                             }
-                            on:click={() => {frameIndex = frame_index}}
-                            on:keypress={() => {frameIndex = frame_index}}
+                            on:click={() => {$selectedFrameIndex = frame_index}}
+                            on:keypress={() => {$selectedFrameIndex = frame_index}}
                         >
                             <title>{frame.human_reviewed === false ? "Unreviewed" : "Reviewed"}</title>
                         </rect>
@@ -105,6 +97,9 @@
         position: relative;
         top: 0;
         left: 0;
+    }
+    svg rect {
+        cursor: pointer;
     }
     .timeline-wrap {
         position: relative;
