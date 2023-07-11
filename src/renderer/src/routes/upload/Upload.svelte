@@ -7,8 +7,6 @@
 
     let projectName = $selectedProject.name || "";
 
-    let alignData = "text-left";
-
     let showUploadVideoModal = false;
     let selectedVideo;
     let showLoadingSymbol = false;
@@ -100,7 +98,7 @@
         {#if showLoadingSymbol}
             <Stretch size="60" color="#FF3E00" unit="px" duration="1s" />
         {:else}
-            <Table tableData={$videosTableData} {alignData} />
+            <Table tableData={$videosTableData} />
         {/if}
     {/if}
 </div>

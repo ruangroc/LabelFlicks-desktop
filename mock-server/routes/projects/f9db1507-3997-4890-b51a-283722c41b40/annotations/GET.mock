@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Accept: application/json;
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true 
+Access-Control-Allow-Headers: *
+
+{
+    "id": "f9db1507-3997-4890-b51a-283722c41b40",
+    "annotations-path": "your/local/path/local_projects/testing-video/annotations"
+}

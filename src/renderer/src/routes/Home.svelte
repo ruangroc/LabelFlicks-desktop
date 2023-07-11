@@ -8,8 +8,6 @@
 
 	onMount(fetchProjects);
 
-	let alignData = "text-center";
-
 	let showCreateProjectModal = false;
 	let projectName = "";
 
@@ -42,7 +40,7 @@
 	</button>
 
 	{#if $projectsTableData.length > 0}
-	<Table tableData={$projectsTableData} {alignData} onClick={projectClicked} />
+	<Table tableData={$projectsTableData} onClick={projectClicked} />
 	{/if}
 
 	{#if showCreateProjectModal}

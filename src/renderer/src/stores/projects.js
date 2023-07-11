@@ -76,3 +76,16 @@ export const createNewProject = async (projectName) => {
 };
 
 
+/*************************************************************/
+// Save images and annotations from all videos in the project
+/*************************************************************/
+export const downloadAnnotations = async (selectedProjectID) => {
+    try {
+        const response = await fetch(`http://localhost:${server_port}/projects/${selectedProjectID}/annotations`);
+        const data = await response.json();
+        return data;
+    }
+    catch (error) {
+        console.log("Error in downloadAnnotations:", error);
+    }
+}

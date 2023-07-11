@@ -3,9 +3,7 @@
 	import { status } from "../../types.ts";
 	import { selectedProject } from "../../stores/projects";
 	import { projectVideos, preprocessingTableData, fetchVideos, restartVideoPreprocessing } from "../../stores/videos";
-    import { onMount } from "svelte";
-
-	let alignData = "text-center";
+  import { onMount } from "svelte";
 
 	let preprocessingCompleted = false;
 	
@@ -59,7 +57,7 @@
 			Preprocessing your videos, please be patient...
 		</h1>
 	</div>
-	<Table tableData={$preprocessingTableData} {alignData} />
+	<Table tableData={$preprocessingTableData} />
 </div>
 
 <style>

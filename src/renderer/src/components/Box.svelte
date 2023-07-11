@@ -1,85 +1,27 @@
 <script>
-    import { labelIdToName, nameToLabelId, projectLabels, currentBoxes } from "../stores/labeling";
+    import { labelIdToName, projectLabels } from "../stores/labeling";
+    import BoxDeleteLabel from "./BoxDeleteLabel.svelte";
+    import BoxLabel from "./BoxLabel.svelte";
+    import BoxRectangle from "./BoxRectangle.svelte";
 
+    // Props for the Box component
     export let bbox;
     export let widthRatio;
     export let heightRatio;
     export let boxIndex;
+    export let selectedFrameID;
 
-    let isEditing = false;
-    let selectedLabel = "";
     let displayedLabel = $labelIdToName[bbox.label_id];
-    let labelDisplayLength = displayedLabel.length * 6;
-
-    function keydown(event) {
-		if (event.key == 'Escape') {
-			event.preventDefault();
-			isEditing = false;
-		}
-	}
-
-    function submit() {
-        if (selectedLabel === displayedLabel) 
-            return;
-
-        $currentBoxes[boxIndex].label_id = $nameToLabelId[selectedLabel];
-        displayedLabel = selectedLabel;
-        labelDisplayLength = displayedLabel.length * 6;
-        $currentBoxes[boxIndex].edited = true;
-		isEditing = false;
-	}
+    let projectLabelIndex = $projectLabels.findIndex(label => label.name === displayedLabel);
 </script>
 
-<!-- translate(x,y) moves the box to where the detected object is -->
-<g transform="translate({bbox.x_top_left * widthRatio}, {bbox.y_top_left * heightRatio})">
-    <!-- the rectangle is the actual drawn bounding box -->
-    <rect 
-        class="bounding-box" 
-        x="0"
-        y="0"
-        width="{bbox.width * widthRatio}" 
-        height="{bbox.height * heightRatio}">
-    </rect>
+<!-- Display the box only if its corresponding labeling timeline is not hidden -->
+{#if $projectLabels && $projectLabels[projectLabelIndex] && !$projectLabels[projectLabelIndex].hidden}
 
-    <!-- write out the label name at the top of each bounding box -->
-    {#if !isEditing}
-        <rect class="bounding-box-label-bg" x="0" y="-9" width="{labelDisplayLength}" height="9" />
-        <text 
-            class="bounding-box-label" 
-            on:click={() => isEditing = true}
-            on:keypress={() => isEditing = true}
-        >
-            {displayedLabel}
-        </text>
-    {:else}
-        <foreignObject width="400" height="400" x="0" y="-9">
-            <form on:submit|preventDefault={submit} on:keydown={keydown}>
-                <select class="select-label" style="width:{labelDisplayLength + 15}px; " bind:value={selectedLabel} on:change={submit} required name="label">
-                    <!-- <option disabled selected value="select">Select a new label</option> -->
-                    {#each $projectLabels as label}
-                        <option value={label.name}>{label.name}</option>
-                    {/each}
-                </select>
-            </form>
-        </foreignObject>
-    {/if}
-</g>
-
-
-<style>
-    rect.bounding-box {
-        stroke: blue;
-        fill: blue;
-        fill-opacity: 0.1;
-    }
-    rect.bounding-box-label-bg {
-        fill: blue;
-        fill-opacity: 0.8;
-    }
-    text.bounding-box-label {
-        fill: white;
-        fill-opacity: 0.9;
-        font-size: 9px;
-        font-family: monospace;
-    }
-</style>
+    <!-- translate(x,y) moves the box to where the detected object is -->
+    <g transform="translate({bbox.x_top_left * widthRatio}, {bbox.y_top_left * heightRatio})">
+        <BoxRectangle bbox={bbox} widthRatio={widthRatio} heightRatio={heightRatio} />
+        <BoxLabel bbox={bbox} displayedLabel={displayedLabel} boxIndex={boxIndex} />
+        <BoxDeleteLabel bbox={bbox} heightRatio={heightRatio} selectedFrameID={selectedFrameID}/>
+    </g>
+{/if}
