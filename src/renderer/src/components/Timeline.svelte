@@ -44,9 +44,9 @@
         {#each $projectLabels as label, label_index}
             <div class="flex flex-row">
                 <p class="mr-4">{label.name}</p>
-                <button class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm">
+                <!-- <button class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm">
                     Rename
-                </button>
+                </button> -->
                 <button 
                     class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm"
                     on:click={() => handleDeleteLabel(label.id)}
