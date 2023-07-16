@@ -10,11 +10,12 @@
         updateReviewedFrames,
         selectedVideoID
     } from "../stores/labeling";
+    import SvelteTooltip from 'svelte-tooltip';
 
     let autoPlayTimeout;
     let paused = true;
     let defaultStyle =
-        "border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm";
+        "border-solid border-2 border-gray-400 p-1 rounded text-sm";
 
     async function changeFrame(value) {
         if ($selectedFrame === {}) return;
@@ -89,7 +90,7 @@
     </div>
     
     <div class="my-1 grid grid-cols-5">
-        <div class="col-span-2 mx-auto text-left">
+        <div class="col-span-1 mx-auto text-left">
             <p class="mr-6">
                 Frame: {$selectedFrame ? $selectedFrame.frame_url.split("/").at(-1) : ""}
             </p>
@@ -128,18 +129,26 @@
             </button>
         </div>
 
-        <div class="col-span-1 mx-auto">
+        <div class="col-span-2 mx-auto">
             <!-- <button
                 class="border-solid border-2 border-gray-400 mr-1 p-1 rounded text-sm"
             >
                 Add Bounding Box
             </button> -->
-            <button
-                class="border-solid border-2 border-gray-400 mr-1 p-1 rounded text-sm"
-                on:click={submitHumanEdits}
+
+            <SvelteTooltip 
+                tip="Use AI to re-predict the labels for the bounding boxes you have yet to review based on what you have reviewed so far" 
+                bottom 
+                color="#FFB74D"
             >
-                Finetune Predictions
-            </button>
+                <button
+                    class="border-solid border-2 border-gray-400 p-1 rounded text-sm"
+                    on:click={submitHumanEdits}
+                >
+                    Predict Unreviewed Labels
+                </button>
+            </SvelteTooltip>
+            
         </div>
     </div>
 {/if}
