@@ -2,15 +2,10 @@
     import { selectedProject } from "../../stores/projects";
     import { projectVideos } from "../../stores/videos";
     import {
-        currentBoxes,
         videoFrames,
         fetchVideoFrames,
         fetchBoundingBoxes,
         fetchLabels,
-        sendUpdatedBoundingBoxes,
-        updateBoundingBoxesNoPredictions,
-        updateReviewedFrames,
-        createLabel,
         selectedVideoID,
         selectedFrame,
         selectedFrameIndex
