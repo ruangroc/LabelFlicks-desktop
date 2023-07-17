@@ -1,5 +1,4 @@
 <script>
-    import { onMount } from "svelte";
     import {
         videoFrames,
         projectLabels,
@@ -10,10 +9,7 @@
     } from "../stores/labeling";
     import { selectedProject } from "../stores/projects";
 
-    let displayLabels = false;
-    let timelineWidth = 0;
     let timelineHeight = 20;
-    let frameWidth = 0;
     let colors = [
         "fill-red-300",
         "fill-orange-300",
@@ -24,31 +20,6 @@
     ];
 
     $: currentBoxLabels = $currentBoxes.map(box => box.label_id);
-
-    onMount(() => {
-        pollTitleRenderStatus();
-    });
-
-    function pollTitleRenderStatus() {
-        let element = document.getElementById("labels-title-row");
-        if (!element) {
-            setTimeout(pollTitleRenderStatus, 100);
-            return;
-        }
-        let rendered = element.getBoundingClientRect().width;
-        if (!rendered) {
-            setTimeout(pollTitleRenderStatus, 100);
-            return;
-        } else {
-            displayLabels = true;
-            timelineWidth =
-                0.9 *
-                document
-                    .getElementById("labels-title-row")
-                    .getBoundingClientRect().width;
-            frameWidth = timelineWidth / $videoFrames.length;
-        }
-    }
 
     async function handleDeleteLabel(labelId) {
         await deleteLabel($selectedProject.id, labelId);
@@ -80,7 +51,7 @@
     }
 </script>
 
-{#if displayLabels}
+{#if $projectLabels.length && $videoFrames.length}
     <div class="flex flex-col overflow-auto h-4/5">
         {#each $projectLabels as label, label_index}
             <div class="flex flex-row">
@@ -105,15 +76,15 @@
             <div class="timeline-wrap mt-1 mb-4">
                 <svg
                     id="timeline-container"
-                    width="{timelineWidth}px"
+                    width="100%"
                     height="{timelineHeight}px"
                 >
                     {#each $videoFrames as frame, frame_index}
                         {#if frame_index === $selectedFrameIndex}
                             <rect
-                                x={frame_index * frameWidth}
+                                x="{frame_index * (1/$videoFrames.length * 100)}%"
                                 y="0"
-                                width="{frameWidth}px"
+                                width="{(1/$videoFrames.length) * 100}%"
                                 height="{timelineHeight}px"
                                 class={determineColorFromCurrentBoxes(currentBoxLabels, label.id, label_index, frame.human_reviewed)}
                             >
@@ -125,9 +96,9 @@
                             </rect>
                         {:else}
                             <rect
-                                x={frame_index * frameWidth}
+                                x="{frame_index * (1/$videoFrames.length * 100)}%"
                                 y="0"
-                                width="{frameWidth}px"
+                                width="{1/$videoFrames.length * 100}%"
                                 height="{timelineHeight}px"
                                 class={determineColorFromFrameInfo(label.id, label_index, frame)}
                                 on:click={() => {
