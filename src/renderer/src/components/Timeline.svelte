@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import { videoFrames, projectLabels, deleteLabel, selectedFrameIndex } from "../stores/labeling";
+    import { videoFrames, projectLabels, deleteLabel, selectedFrameIndex, fetchLabels } from "../stores/labeling";
     import { selectedProject } from "../stores/projects";
 
     let displayLabels = false;
