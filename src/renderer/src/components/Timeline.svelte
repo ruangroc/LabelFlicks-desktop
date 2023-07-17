@@ -62,16 +62,22 @@
                 >
                     Delete
                 </button>
-                <button
-                    class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm"
-                    on:click={() => (label.hidden = !label.hidden)}
-                >
                     {#if label.hidden}
-                        Show
+                        <button
+                            class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm bg-gray-300"
+                            on:click={() => (label.hidden = !label.hidden)}
+                        >
+                            Hidden
+                        </button>
                     {:else}
-                        Hide
+                        <button
+                            class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm"
+                            on:click={() => (label.hidden = !label.hidden)}
+                        >
+                            Shown
+                        </button>
                     {/if}
-                </button>
+                
             </div>
             <div class="timeline-wrap mt-1 mb-4">
                 <svg
