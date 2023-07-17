@@ -12,7 +12,7 @@
     export let selectedFrameID;
 
     let displayedLabel = $labelIdToName[bbox.label_id];
-    let projectLabelIndex = $projectLabels.findIndex(label => label.name === displayedLabel);
+    $: projectLabelIndex = $projectLabels.findIndex(label => label.name === displayedLabel);
 </script>
 
 <!-- Display the box only if its corresponding labeling timeline is not hidden -->
@@ -21,7 +21,7 @@
     <!-- translate(x,y) moves the box to where the detected object is -->
     <g transform="translate({bbox.x_top_left * widthRatio}, {bbox.y_top_left * heightRatio})">
         <BoxRectangle bbox={bbox} widthRatio={widthRatio} heightRatio={heightRatio} />
-        <BoxLabel bbox={bbox} displayedLabel={displayedLabel} boxIndex={boxIndex} />
+        <BoxLabel bbox={bbox} bind:displayedLabel={displayedLabel} boxIndex={boxIndex} />
         <BoxDeleteLabel bbox={bbox} heightRatio={heightRatio} selectedFrameID={selectedFrameID}/>
     </g>
 {/if}
