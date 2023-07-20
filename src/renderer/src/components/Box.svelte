@@ -16,7 +16,7 @@
 </script>
 
 <!-- Display the box only if its corresponding labeling timeline is not hidden -->
-{#if $projectLabels && $projectLabels[projectLabelIndex] && !$projectLabels[projectLabelIndex].hidden}
+{#if bbox.checked && $projectLabels && $projectLabels[projectLabelIndex] && !$projectLabels[projectLabelIndex].hidden}
 
     <!-- translate(x,y) moves the box to where the detected object is -->
     <g transform="translate({bbox.x_top_left * widthRatio}, {bbox.y_top_left * heightRatio})">

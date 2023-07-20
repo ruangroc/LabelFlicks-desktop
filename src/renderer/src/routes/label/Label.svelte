@@ -8,7 +8,7 @@
         fetchLabels,
         selectedVideoID,
         selectedFrame,
-        selectedFrameIndex
+        selectedFrameIndex,
     } from "../../stores/labeling";
     import { onMount } from "svelte";
     import SelectVideo from "../../components/SelectVideo.svelte";
@@ -18,14 +18,10 @@
     import { Stretch } from "svelte-loading-spinners";
     import Timeline from "../../components/Timeline.svelte";
     import CreateLabel from "../../components/CreateLabel.svelte";
+    import SelectBoxes from "../../components/SelectBoxes.svelte";
 
     let showLoadingSymbol = true;
     let showCreateLabelModal = false;
-
-    // Debugging: what are the current bounding boxes?
-    // currentBoxes.subscribe((boxes) => {
-    //     console.log("Current boxes updated:", boxes)
-    // });
 
     // Auto-refresh the screen when video changes
     selectedVideoID.subscribe(async (videoID) => {
@@ -97,6 +93,9 @@
                 <CreateLabel bind:showCreateLabelModal />
             </div>
         </div>
+
+        <SelectBoxes />
+        
     {:else}
         <Stretch size="60" color="#FF3E00" unit="px" duration="1s" />
     {/if}
