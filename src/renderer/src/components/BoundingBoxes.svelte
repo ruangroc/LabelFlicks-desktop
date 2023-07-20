@@ -37,11 +37,11 @@
 </script>
 
 
-{#if displayBoxes && $selectedFrame}
+{#if displayBoxes && $selectedFrame && renderedFrameProperties !== {}}
     <svg
         id="bounding-box-container"
-        width="{renderedFrameProperties.width}px"
-        height="{renderedFrameProperties.height}px"
+        width="100%"
+        height="100%"
     >
         {#each $currentBoxes as bbox, boxIndex}
             <Box bbox={bbox} widthRatio={widthRatio} heightRatio={heightRatio} boxIndex={boxIndex} selectedFrameID={$selectedFrame.id} />
