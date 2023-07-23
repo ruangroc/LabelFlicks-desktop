@@ -4,12 +4,12 @@
 
 </script>
 
-<div class="flex flex-col w-full">
+<div class="flex flex-col w-full h-48 overflow-auto">
     <h2 class="text-lg py-2">Individual Box Selection</h2>
-    {#each $currentBoxes as box, boxIndex}
+    {#each $currentBoxes as box, box_index}
         <label class="text-md">
             <input type="checkbox" bind:checked={box.checked} />
-            Box: {boxIndex}  |  Label: {$labelIdToName[box.label_id]}
+            Label: {$labelIdToName[box.label_id]}    |   Box Index: {box_index}
         </label>
     {/each}
 </div>

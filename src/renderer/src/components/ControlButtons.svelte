@@ -27,13 +27,10 @@
         // Once the frame changes and no additional edits are made,
         // assume all boxes in frame have been human-reviewed 
         // i.e. all boxes look good to the user 
-        // but only if moving forward in the video, not back
-        if (Number(value) > 0) {
-            $videoFrames[$selectedFrameIndex].human_reviewed = true;
-            $currentBoxes.forEach(box => box.prediction = false);
-            await updateBoundingBoxesNoPredictions();
-            await updateReviewedFrames();
-        }
+        $videoFrames[$selectedFrameIndex].human_reviewed = true;
+        $currentBoxes.forEach(box => box.prediction = false);
+        await updateBoundingBoxesNoPredictions();
+        await updateReviewedFrames();
 
         // Then move onto the next frame
         $selectedFrameIndex += value;

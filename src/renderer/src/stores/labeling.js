@@ -67,7 +67,8 @@ export const fetchBoundingBoxes = async (frameID) => {
         const response = await fetch(`http://localhost:${server_port}/frames/${frameID}/inferences`);
         const data = await response.json();
         // add property to denote when boxes have been edited
-        let boxesWithEditedField = data.bounding_boxes.map(box => ({ ...box, "edited": false }));
+        let boxesWithEditedField = data.bounding_boxes.map(box => ({ ...box, "edited": false, "checked": true }));
+        boxesWithEditedField.sort((a,b) => a.id > b.id);
         currentBoxes.set(boxesWithEditedField);
     }
     catch (error) {
@@ -106,7 +107,7 @@ export const sendUpdatedBoundingBoxes = async (selectedProjectID, selectedVideoI
 
     // Drop the "edited" property from each box as it won't be accepted
     // by the backend and only the frontend needs to know about it
-    editedBoxes = editedBoxes.map(({ edited, ...box }) => box);
+    editedBoxes = editedBoxes.map(({ edited, checked, ...box }) => box);
     console.log("About to send boxes for finetuning predictions:", editedBoxes);
 
     // Make sure to send project_id and video_id as well
@@ -141,8 +142,7 @@ export const sendUpdatedBoundingBoxes = async (selectedProjectID, selectedVideoI
 export const updateBoundingBoxesNoPredictions = async () => { 
     // Drop the "edited" property from each box as it won't be accepted
     // by the backend and only the frontend needs to know about it
-    let boxes = get(currentBoxes).map(({ edited, ...box }) => box);
-    console.log("About to send boxes to update db, no finetuning:", boxes);
+    let boxes = get(currentBoxes).map(({ edited, checked, ...box }) => box);
 
     // Send only the edited boxes and specify query parameters to update the boxes
     // in the correct project and video

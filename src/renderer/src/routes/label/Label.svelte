@@ -13,12 +13,10 @@
     import { onMount } from "svelte";
     import SelectVideo from "../../components/SelectVideo.svelte";
     import PercentFramesReviewed from "../../components/PercentFramesReviewed.svelte";
-    import ControlButtons from "../../components/ControlButtons.svelte";
     import StillFrame from "../../components/StillFrame.svelte";
     import { Stretch } from "svelte-loading-spinners";
     import Timeline from "../../components/Timeline.svelte";
     import CreateLabel from "../../components/CreateLabel.svelte";
-    import SelectBoxes from "../../components/SelectBoxes.svelte";
 
     let showLoadingSymbol = true;
     let showCreateLabelModal = false;
@@ -36,6 +34,7 @@
 
     // Auto-refresh the "video player" when frame index changes
     selectedFrameIndex.subscribe(async () => {
+        await fetchVideoFrames($selectedVideoID);
         $selectedFrame = $videoFrames[$selectedFrameIndex];
         if ($selectedFrame) await fetchBoundingBoxes($selectedFrame.id);
     })
@@ -72,7 +71,6 @@
                 </div>
         
                 <StillFrame />
-                <ControlButtons />
             </div>
 
             <div class="pl-4">
@@ -94,8 +92,6 @@
             </div>
         </div>
 
-        <SelectBoxes />
-        
     {:else}
         <Stretch size="60" color="#FF3E00" unit="px" duration="1s" />
     {/if}

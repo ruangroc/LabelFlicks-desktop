@@ -52,7 +52,7 @@
 </script>
 
 {#if $projectLabels.length && $videoFrames.length}
-    <div class="flex flex-col overflow-auto h-4/5">
+    <div class="flex flex-col h-3/4 overflow-auto">
         {#each $projectLabels as label, label_index}
             <div class="flex flex-row">
                 <p class="mr-4">{label.name}</p>
