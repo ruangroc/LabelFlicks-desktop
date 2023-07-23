@@ -1,6 +1,6 @@
 <script>
     import Modal from "./Modal.svelte";
-    import { createLabel } from "../stores/labeling";
+    import { createLabel, fetchLabels } from "../stores/labeling";
     import { selectedProject } from "../stores/projects";
 
     // Props for CreateLabel component
@@ -12,7 +12,7 @@
         await createLabel($selectedProject.id, newLabelName);
 		showCreateLabelModal = false;
 		newLabelName = "";
-        await refreshScreen(frameIndex);
+        await fetchLabels($selectedProject.id);
     }
 </script>
 
