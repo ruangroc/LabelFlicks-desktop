@@ -4,7 +4,6 @@
 
 	export let tableData = [];
 	export let onClick = () => {};
-	$: numHeadings = Object.keys(tableData[0]).length;
 </script>
 
 <table class="w-full mx-auto border-collapse">
@@ -19,7 +18,7 @@
 					>
 				{/if}
 			{/each}
-		</tr><tr />
+		</tr>
 	</thead>
 	<tbody>
 		{#each Object.values(tableData) as row}

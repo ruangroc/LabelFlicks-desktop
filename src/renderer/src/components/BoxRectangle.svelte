@@ -6,13 +6,13 @@
 
 <!-- Display predicted, non-human-reviewed boxes in red -->
 <rect 
-    id={"rect-" + String(bbox.id)}
     class={bbox.prediction ? "predicted" : "bounding-box"} 
     x="0"
     y="0"
     width="{bbox.width * widthRatio}" 
-    height="{bbox.height * heightRatio}">
-</rect>
+    height="{bbox.height * heightRatio}"
+    data-testid="rect-{bbox.id}"
+/>
 
 <style>
     rect.bounding-box {

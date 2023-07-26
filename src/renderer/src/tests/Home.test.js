@@ -7,6 +7,7 @@ import { expect } from 'vitest';
 import { get } from 'svelte/store';
 import { projectVideos, videosTableData } from '../stores/videos';
 import { selectedProject, allProjects, projectsTableData } from '../stores/projects';
+import '@testing-library/jest-dom';
 
 const server_port = process.env.SERVER_PORT || 5000;
 const server = setupServer(
@@ -68,7 +69,6 @@ describe("Home.svelte", () => {
         fetch(`http://localhost:${server_port}/projects/f9db1507-3997-4890-b51a-283722c41b44/videos`)
         .then(response => response.json())
         .then(data => {
-            console.log("videos fetched:", data.videos);
             projectVideos.set(data.videos);
         });
     })
