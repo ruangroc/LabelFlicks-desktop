@@ -50,19 +50,13 @@
     }
 
     async function submitHumanEdits(labelDeleted=false) {
-        // showLoadingSymbol = true;
         await sendUpdatedBoundingBoxes($selectedProject.id, $selectedVideoID);
-
-        // Get the updated unique labels per frame
-        // if (labelDeleted) labelDeleted = false;
-        // refreshScreen(frameIndex);
-        // showLoadingSymbol = false;
     }
 </script>
 
 {#if $selectedFrame}
     <!-- Single timeline for navigation purposes-->
-    <div class="timeline-wrap mb-1 w-full">
+    <div class="timeline-wrap mb-1 w-full" data-testid="frame-indicator-timeline">
         <svg
             id="timeline-container"
             width="100%"
@@ -88,7 +82,7 @@
     
     <div class="my-1 grid grid-cols-5">
         <div class="col-span-1 mx-auto text-left">
-            <p class="mr-6">
+            <p class="mr-6" data-testid="frame-text">
                 Frame: {$selectedFrame ? $selectedFrame.frame_url.split("/").at(-1) : ""}
             </p>
         </div>

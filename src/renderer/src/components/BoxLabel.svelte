@@ -35,12 +35,14 @@
     <rect 
         class={bbox.prediction ? "predicted-label-bg" : "bounding-box-label-bg"} 
         x="0" y="0" width="{labelDisplayLength}" height="9" 
+        data-testid="label-rect-{bbox.id}"
     />
     <text 
         class="bounding-box-label" 
         x="0" y="6"
         on:click={() => isEditing = true}
         on:keypress={() => isEditing = true}
+        data-testid="label-text-{bbox.id}"
     >
         {displayedLabel}
     </text>
