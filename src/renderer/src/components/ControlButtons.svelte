@@ -128,8 +128,8 @@
             </button> -->
 
             <SvelteTooltip 
-                tip="Use AI to re-predict the labels for the bounding boxes you have yet to review based on what you have reviewed so far" 
-                bottom 
+                tip="Use AI to re-predict labels of unreviewed boxes" 
+                left 
                 color="#FFB74D"
             >
                 <button
