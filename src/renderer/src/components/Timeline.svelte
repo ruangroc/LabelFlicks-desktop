@@ -49,6 +49,15 @@
             return "fill-gray-300";
         }
     }
+
+    function reviewCurrentBoxes(labelId) {
+        $currentBoxes.forEach(box => {
+            if (box.label_id === labelId) {
+                box.checked = !box.checked;
+            }
+        });
+        $currentBoxes = $currentBoxes;
+    }
 </script>
 
 {#if $projectLabels.length && $videoFrames.length}
@@ -65,14 +74,14 @@
                     {#if label.hidden}
                         <button
                             class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm bg-gray-300"
-                            on:click={() => (label.hidden = !label.hidden)}
+                            on:click={() => {label.hidden = !label.hidden; reviewCurrentBoxes(label.id);}}
                         >
                             Hidden
                         </button>
                     {:else}
                         <button
                             class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm"
-                            on:click={() => (label.hidden = !label.hidden)}
+                            on:click={() => {label.hidden = !label.hidden; reviewCurrentBoxes(label.id);}}
                         >
                             Shown
                         </button>
