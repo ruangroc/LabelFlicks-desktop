@@ -1,90 +1,135 @@
 <script>
-    import { onMount } from "svelte";
-    import { videoFrames, projectLabels, deleteLabel, selectedFrameIndex } from "../stores/labeling";
+    import {
+        videoFrames,
+        projectLabels,
+        deleteLabel,
+        selectedFrameIndex,
+        fetchLabels,
+        currentBoxes,
+    } from "../stores/labeling";
     import { selectedProject } from "../stores/projects";
 
-    let displayLabels = false;
-    let timelineWidth = 0;
     let timelineHeight = 20;
-    let frameWidth = 0;
-    let colors = ["fill-red-300", "fill-orange-300", "fill-teal-300", "fill-sky-300", "fill-violet-300", "fill-rose-300"];
+    let colors = [
+        "fill-red-300",
+        "fill-orange-300",
+        "fill-teal-300",
+        "fill-sky-300",
+        "fill-violet-300",
+        "fill-rose-300",
+    ];
 
-    onMount(() => {
-        pollTitleRenderStatus();
-    });
+    $: currentBoxLabels = $currentBoxes.map(box => box.label_id);
 
-    function pollTitleRenderStatus() {
-        let element = document.getElementById("labels-title-row");
-        if (!element) {
-            setTimeout(pollTitleRenderStatus, 100);
-            return;
+    async function handleDeleteLabel(labelId) {
+        await deleteLabel($selectedProject.id, labelId);
+        await fetchLabels($selectedProject.id);
+    }
+
+    function determineColorFromCurrentBoxes(currentLabels, labelId, labelIndex, frameHumanReviewed) {
+        if (currentLabels.find((x) => x === labelId) !== undefined && frameHumanReviewed === false) {
+            return `${colors[labelIndex % colors.length]} stroke-red-500 stroke-2`;
         }
-        let rendered = element.getBoundingClientRect().width;
-        if (!rendered) {
-            setTimeout(pollTitleRenderStatus, 100);
-            return;
+        else if (currentLabels.find((x) => x === labelId) !== undefined) {
+            return `${colors[labelIndex % colors.length]} stroke-gray-700 stroke-2`;
         }
         else {
-            displayLabels = true;
-            timelineWidth = 0.9 * document.getElementById("labels-title-row").getBoundingClientRect().width;
-            frameWidth = timelineWidth / $videoFrames.length;
+            return "fill-gray-300 stroke-gray-700 stroke-2";
+        } 
+    }
+
+    function determineColorFromFrameInfo(labelId, labelIndex, frame) {
+        if (frame.labels.find((x) => x === labelId) !== undefined && frame.human_reviewed === false) {
+            return `${colors[labelIndex % colors.length]} stroke-red-500 stroke-2`;
+        }
+        else if (frame.labels.find((x) => x === labelId) !== undefined) {
+            return `${colors[labelIndex % colors.length]}`;
+        }
+        else {
+            return "fill-gray-300";
         }
     }
 
-    async function handleDeleteLabel(labelId) {
-        console.log("Label ID:", labelId);
-        await deleteLabel($selectedProject.id, labelId);
-        // labelDeleted = true;
-        await fetchLabels($selectedProject.id);
+    function reviewCurrentBoxes(labelId) {
+        $currentBoxes.forEach(box => {
+            if (box.label_id === labelId) {
+                box.checked = !box.checked;
+            }
+        });
+        $currentBoxes = $currentBoxes;
     }
 </script>
 
-{#if displayLabels}
-    <div class="flex flex-col overflow-auto h-4/5">
+{#if $projectLabels.length && $videoFrames.length}
+    <div class="flex flex-col h-3/4 overflow-auto">
         {#each $projectLabels as label, label_index}
             <div class="flex flex-row">
                 <p class="mr-4">{label.name}</p>
-                <button class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm">
-                    Rename
-                </button>
-                <button 
+                <button
                     class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm"
                     on:click={() => handleDeleteLabel(label.id)}
                 >
                     Delete
                 </button>
-                <button 
-                    class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm" 
-                    on:click={() => label.hidden = !label.hidden}
-                >
                     {#if label.hidden}
-                    Show
+                        <button
+                            class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm bg-gray-300"
+                            on:click={() => {label.hidden = !label.hidden; reviewCurrentBoxes(label.id);}}
+                        >
+                            Hidden
+                        </button>
                     {:else}
-                    Hide
+                        <button
+                            class="border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm"
+                            on:click={() => {label.hidden = !label.hidden; reviewCurrentBoxes(label.id);}}
+                        >
+                            Shown
+                        </button>
                     {/if}
-                </button>
+                
             </div>
             <div class="timeline-wrap mt-1 mb-4">
                 <svg
                     id="timeline-container"
-                    width="{timelineWidth}px"
+                    width="100%"
                     height="{timelineHeight}px"
                 >
                     {#each $videoFrames as frame, frame_index}
-                        <rect 
-                            x="{frame_index * frameWidth}"
-                            y="0"
-                            width="{frameWidth}px" 
-                            height="{timelineHeight}px"
-                            class={
-                                (frame.labels.find(x => x === label.id) && frame.human_reviewed === false) ? colors[label_index % colors.length] + " stroke-red-500 stroke-2" : 
-                                (frame.labels.find(x => x === label.id) ? colors[label_index % colors.length] : "fill-gray-300")
-                            }
-                            on:click={() => {$selectedFrameIndex = frame_index}}
-                            on:keypress={() => {$selectedFrameIndex = frame_index}}
-                        >
-                            <title>{frame.human_reviewed === false ? "Unreviewed" : "Reviewed"}</title>
-                        </rect>
+                        {#if frame_index === $selectedFrameIndex}
+                            <rect
+                                x="{frame_index * (1/$videoFrames.length * 100)}%"
+                                y="0"
+                                width="{(1/$videoFrames.length) * 100}%"
+                                height="{timelineHeight}px"
+                                class={determineColorFromCurrentBoxes(currentBoxLabels, label.id, label_index, frame.human_reviewed)}
+                            >
+                                <title
+                                    >{frame.human_reviewed === false
+                                        ? "Unreviewed"
+                                        : "Reviewed"}</title
+                                >
+                            </rect>
+                        {:else}
+                            <rect
+                                x="{frame_index * (1/$videoFrames.length * 100)}%"
+                                y="0"
+                                width="{1/$videoFrames.length * 100}%"
+                                height="{timelineHeight}px"
+                                class={determineColorFromFrameInfo(label.id, label_index, frame)}
+                                on:click={() => {
+                                    $selectedFrameIndex = frame_index;
+                                }}
+                                on:keypress={() => {
+                                    $selectedFrameIndex = frame_index;
+                                }}
+                            >
+                                <title
+                                    >{frame.human_reviewed === false
+                                        ? "Unreviewed"
+                                        : "Reviewed"}</title
+                                >
+                            </rect>
+                        {/if}
                     {/each}
                 </svg>
             </div>

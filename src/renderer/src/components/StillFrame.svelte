@@ -1,16 +1,24 @@
 <script>
     import { selectedFrame } from "../stores/labeling";
     import BoundingBoxes from "./BoundingBoxes.svelte";
+    import SelectBoxes from "./SelectBoxes.svelte";
+    import ControlButtons from "./ControlButtons.svelte";
 </script>
 
 {#if $selectedFrame}
-<div class="img-overlay-wrap">
-    <img
-        id="frame-img"
-        src={$selectedFrame.frame_url}
-        alt="still frame from the video"
-    />
-    <BoundingBoxes />
+<div class="flex-row">
+    <div class="img-overlay-wrap">
+        <img
+            id="frame-img"
+            src={$selectedFrame.frame_url}
+            alt="still frame from the video"
+        />
+        <BoundingBoxes />
+    </div>
+    <div>
+        <ControlButtons />
+        <SelectBoxes />
+    </div>
 </div>
 {/if}
 

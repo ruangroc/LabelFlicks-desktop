@@ -1,6 +1,6 @@
 <script>
     import Modal from "./Modal.svelte";
-    import { createLabel } from "../stores/labeling";
+    import { createLabel, fetchLabels } from "../stores/labeling";
     import { selectedProject } from "../stores/projects";
 
     // Props for CreateLabel component
@@ -12,13 +12,13 @@
         await createLabel($selectedProject.id, newLabelName);
 		showCreateLabelModal = false;
 		newLabelName = "";
-        await refreshScreen(frameIndex);
+        await fetchLabels($selectedProject.id);
     }
 </script>
 
 {#if showCreateLabelModal}
 <Modal>
-    <h2 slot="header">
+    <h2 slot="header" data-testid="modal-heading">
         Create a New Label
     </h2>
 
@@ -32,16 +32,22 @@
                 placeholder="project-name"
                 bind:value={newLabelName}
                 class="w-full h-8 rounded bg-gray-200 p-2 text-md"
+                data-testid="modal-input"
             />
         </div>
     
         <button 
             class="bg-gray-300 hover:bg-gray-400 ml-auto p-2 rounded" 
             on:click={() => showCreateLabelModal = false}
+            data-testid="cancel-button"
         >
             Cancel
         </button>
-        <button class="bg-green-300 hover:bg-green-400 ml-3 p-2 rounded" on:click={createNewLabel}>
+        <button 
+            class="bg-green-300 hover:bg-green-400 ml-3 p-2 rounded" 
+            on:click={createNewLabel}
+            data-testid="create-button"
+        >
             Create Label
         </button>
     </div>

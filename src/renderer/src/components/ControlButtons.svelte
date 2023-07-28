@@ -10,11 +10,12 @@
         updateReviewedFrames,
         selectedVideoID
     } from "../stores/labeling";
+    import SvelteTooltip from 'svelte-tooltip';
 
     let autoPlayTimeout;
     let paused = true;
     let defaultStyle =
-        "border-solid border-2 border-gray-400 mx-1 p-1 rounded text-sm";
+        "border-solid border-2 border-gray-400 p-1 rounded text-sm";
 
     async function changeFrame(value) {
         if ($selectedFrame === {}) return;
@@ -26,13 +27,10 @@
         // Once the frame changes and no additional edits are made,
         // assume all boxes in frame have been human-reviewed 
         // i.e. all boxes look good to the user 
-        // but only if moving forward in the video, not back
-        if (Number(value) > 0) {
-            $videoFrames[$selectedFrameIndex].human_reviewed = true;
-            $currentBoxes.forEach(box => box.prediction = false);
-            await updateBoundingBoxesNoPredictions();
-            await updateReviewedFrames();
-        }
+        $videoFrames[$selectedFrameIndex].human_reviewed = true;
+        $currentBoxes.forEach(box => box.prediction = false);
+        await updateBoundingBoxesNoPredictions();
+        await updateReviewedFrames();
 
         // Then move onto the next frame
         $selectedFrameIndex += value;
@@ -52,19 +50,13 @@
     }
 
     async function submitHumanEdits(labelDeleted=false) {
-        // showLoadingSymbol = true;
         await sendUpdatedBoundingBoxes($selectedProject.id, $selectedVideoID);
-
-        // Get the updated unique labels per frame
-        // if (labelDeleted) labelDeleted = false;
-        // refreshScreen(frameIndex);
-        // showLoadingSymbol = false;
     }
 </script>
 
 {#if $selectedFrame}
     <!-- Single timeline for navigation purposes-->
-    <div class="timeline-wrap mb-1 w-full">
+    <div class="timeline-wrap mb-1 w-full" data-testid="frame-indicator-timeline">
         <svg
             id="timeline-container"
             width="100%"
@@ -89,8 +81,8 @@
     </div>
     
     <div class="my-1 grid grid-cols-5">
-        <div class="col-span-2 mx-auto text-left">
-            <p class="mr-6">
+        <div class="col-span-1 mx-auto text-left">
+            <p class="mr-6" data-testid="frame-text">
                 Frame: {$selectedFrame ? $selectedFrame.frame_url.split("/").at(-1) : ""}
             </p>
         </div>
@@ -128,18 +120,26 @@
             </button>
         </div>
 
-        <div class="col-span-1 mx-auto">
+        <div class="col-span-2 mx-auto">
             <!-- <button
                 class="border-solid border-2 border-gray-400 mr-1 p-1 rounded text-sm"
             >
                 Add Bounding Box
             </button> -->
-            <button
-                class="border-solid border-2 border-gray-400 mr-1 p-1 rounded text-sm"
-                on:click={submitHumanEdits}
+
+            <SvelteTooltip 
+                tip="Use AI to re-predict labels of unreviewed boxes" 
+                left 
+                color="#FFB74D"
             >
-                Finetune Predictions
-            </button>
+                <button
+                    class="border-solid border-2 border-gray-400 p-1 rounded text-sm"
+                    on:click={submitHumanEdits}
+                >
+                    Predict Unreviewed Labels
+                </button>
+            </SvelteTooltip>
+            
         </div>
     </div>
 {/if}

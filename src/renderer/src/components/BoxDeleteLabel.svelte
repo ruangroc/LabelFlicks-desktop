@@ -1,10 +1,14 @@
 <script>
-    import { deleteBox, fetchBoundingBoxes } from "../stores/labeling";
+    import { deleteBox, fetchBoundingBoxes, selectedFrame } from "../stores/labeling";
 
     // Props for the Box component
     export let bbox;
     export let heightRatio;
-    export let selectedFrameID;
+
+    async function handleDeleteLabel() {
+        await deleteBox(bbox.id);
+        await fetchBoundingBoxes($selectedFrame.id);
+    }
 </script>
 
 <rect 
@@ -15,8 +19,8 @@
 <text
     class="bounding-box-label" 
     x="0" y="{bbox.height * heightRatio - 2}"
-    on:click={() => {deleteBox(bbox.id); fetchBoundingBoxes(selectedFrameID);}}
-    on:keypress={() => {deleteBox(bbox.id); fetchBoundingBoxes(selectedFrameID);}}
+    on:click={() => {handleDeleteLabel()}}
+    on:keypress={() => {handleDeleteLabel()}}
 >
     delete
 </text>

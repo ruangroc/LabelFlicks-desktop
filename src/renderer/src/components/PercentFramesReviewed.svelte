@@ -19,7 +19,7 @@
     }
 </script>
 
-<div class="w-full py-1">
+<div class="w-full py-1" data-testid="percent-reviewed">
     {#if percentReviewedFrames !== undefined}
         <p>
             {percentReviewedFrames}% of {$videoFrames.length} total frames reviewed

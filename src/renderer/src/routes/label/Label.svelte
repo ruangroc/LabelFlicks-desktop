@@ -2,23 +2,17 @@
     import { selectedProject } from "../../stores/projects";
     import { projectVideos } from "../../stores/videos";
     import {
-        currentBoxes,
         videoFrames,
         fetchVideoFrames,
         fetchBoundingBoxes,
         fetchLabels,
-        sendUpdatedBoundingBoxes,
-        updateBoundingBoxesNoPredictions,
-        updateReviewedFrames,
-        createLabel,
         selectedVideoID,
         selectedFrame,
-        selectedFrameIndex
+        selectedFrameIndex,
     } from "../../stores/labeling";
     import { onMount } from "svelte";
     import SelectVideo from "../../components/SelectVideo.svelte";
     import PercentFramesReviewed from "../../components/PercentFramesReviewed.svelte";
-    import ControlButtons from "../../components/ControlButtons.svelte";
     import StillFrame from "../../components/StillFrame.svelte";
     import { Stretch } from "svelte-loading-spinners";
     import Timeline from "../../components/Timeline.svelte";
@@ -26,11 +20,6 @@
 
     let showLoadingSymbol = true;
     let showCreateLabelModal = false;
-
-    // Debugging: what are the current bounding boxes?
-    // currentBoxes.subscribe((boxes) => {
-    //     console.log("Current boxes updated:", boxes)
-    // });
 
     // Auto-refresh the screen when video changes
     selectedVideoID.subscribe(async (videoID) => {
@@ -45,6 +34,7 @@
 
     // Auto-refresh the "video player" when frame index changes
     selectedFrameIndex.subscribe(async () => {
+        await fetchVideoFrames($selectedVideoID);
         $selectedFrame = $videoFrames[$selectedFrameIndex];
         if ($selectedFrame) await fetchBoundingBoxes($selectedFrame.id);
     })
@@ -81,7 +71,6 @@
                 </div>
         
                 <StillFrame />
-                <ControlButtons />
             </div>
 
             <div class="pl-4">
@@ -102,6 +91,7 @@
                 <CreateLabel bind:showCreateLabelModal />
             </div>
         </div>
+
     {:else}
         <Stretch size="60" color="#FF3E00" unit="px" duration="1s" />
     {/if}
