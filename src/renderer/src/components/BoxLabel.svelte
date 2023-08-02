@@ -66,8 +66,8 @@
 
 <style>
     rect.bounding-box-label-bg {
-        fill: blue;
-        fill-opacity: 0.8;
+        fill: rgb(3 105 161); /* tailwind css sky-700 */
+        fill-opacity: 0.9;
         cursor: pointer;
     }
     text.bounding-box-label {
@@ -78,8 +78,8 @@
         cursor: pointer;
     }
     rect.predicted-label-bg {
-        fill: red;
-        fill-opacity: 0.8;
+        fill: rgb(185 28 28); /* tailwind css red-700 */
+        fill-opacity: 0.9;
         cursor: pointer;
     }
 </style>

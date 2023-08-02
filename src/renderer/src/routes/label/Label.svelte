@@ -86,6 +86,29 @@
                     </button>
                 </div>
 
+                <div class="flex flex-row my-2">
+                    <svg width="50%" height="25px">
+                        <rect 
+                            x="0"
+                            y="0"
+                            width="15px" 
+                            height="15px"
+                            fill="rgb(125 211 252)"
+                        />
+                        <text x="10%" y="50%">Human-reviewed frame</text>
+                    </svg>
+                    <svg y="40%" width="50%" height="25px">
+                        <rect 
+                            x="0"
+                            y="0"
+                            width="15px" 
+                            height="15px"
+                            fill="rgb(248 113 113)"
+                        />
+                        <text x="10%" y="50%">Predicted frame</text>
+                    </svg>
+                </div>
+
                 <Timeline />
 
                 <CreateLabel bind:showCreateLabelModal />

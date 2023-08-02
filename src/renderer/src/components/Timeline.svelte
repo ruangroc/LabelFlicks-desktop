@@ -10,40 +10,18 @@
     import { selectedProject } from "../stores/projects";
 
     let timelineHeight = 20;
-    let colors = [
-        "fill-red-300",
-        "fill-orange-300",
-        "fill-teal-300",
-        "fill-sky-300",
-        "fill-violet-300",
-        "fill-rose-300",
-    ];
-
-    $: currentBoxLabels = $currentBoxes.map(box => box.label_id);
 
     async function handleDeleteLabel(labelId) {
         await deleteLabel($selectedProject.id, labelId);
         await fetchLabels($selectedProject.id);
     }
 
-    function determineColorFromCurrentBoxes(currentLabels, labelId, labelIndex, frameHumanReviewed) {
-        if (currentLabels.find((x) => x === labelId) !== undefined && frameHumanReviewed === false) {
-            return `${colors[labelIndex % colors.length]} stroke-red-500 stroke-2`;
-        }
-        else if (currentLabels.find((x) => x === labelId) !== undefined) {
-            return `${colors[labelIndex % colors.length]} stroke-gray-700 stroke-2`;
-        }
-        else {
-            return "fill-gray-300 stroke-gray-700 stroke-2";
-        } 
-    }
-
-    function determineColorFromFrameInfo(labelId, labelIndex, frame) {
+    function determineColorFromFrameInfo(labelId, frame) {
         if (frame.labels.find((x) => x === labelId) !== undefined && frame.human_reviewed === false) {
-            return `${colors[labelIndex % colors.length]} stroke-red-500 stroke-2`;
+            return `fill-red-400`;
         }
         else if (frame.labels.find((x) => x === labelId) !== undefined) {
-            return `${colors[labelIndex % colors.length]}`;
+            return `fill-sky-300`;
         }
         else {
             return "fill-gray-300";
@@ -62,7 +40,7 @@
 
 {#if $projectLabels.length && $videoFrames.length}
     <div class="flex flex-col h-3/4 overflow-auto">
-        {#each $projectLabels as label, label_index}
+        {#each $projectLabels as label}
             <div class="flex flex-row">
                 <p class="mr-4">{label.name}</p>
                 <button
@@ -95,13 +73,15 @@
                     height="{timelineHeight}px"
                 >
                     {#each $videoFrames as frame, frame_index}
+
+                        <!-- Current frame segments should have a dark grey border in addition to the base styling -->
                         {#if frame_index === $selectedFrameIndex}
                             <rect
                                 x="{frame_index * (1/$videoFrames.length * 100)}%"
                                 y="0"
                                 width="{(1/$videoFrames.length) * 100}%"
                                 height="{timelineHeight}px"
-                                class={determineColorFromCurrentBoxes(currentBoxLabels, label.id, label_index, frame.human_reviewed)}
+                                class={determineColorFromFrameInfo(label.id, frame) + " stroke-gray-700 stroke-2"}
                             >
                                 <title
                                     >{frame.human_reviewed === false
@@ -115,7 +95,7 @@
                                 y="0"
                                 width="{1/$videoFrames.length * 100}%"
                                 height="{timelineHeight}px"
-                                class={determineColorFromFrameInfo(label.id, label_index, frame)}
+                                class={determineColorFromFrameInfo(label.id, frame)}
                                 on:click={() => {
                                     $selectedFrameIndex = frame_index;
                                 }}

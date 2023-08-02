@@ -16,13 +16,13 @@
 
 <style>
     rect.bounding-box {
-        stroke: blue;
-        fill: blue;
-        fill-opacity: 0.1;
+        stroke: rgb(2 132 199); /* tailwind css sky-600 */
+        fill: rgb(125 211 252); /* tailwind css sky-300 */
+        fill-opacity: 0.35;
     }
     rect.predicted {
-        stroke: red;
-        fill: red;
-        fill-opacity: 0.1;
+        stroke: rgb(185 28 28); /* tailwind css red-700 */
+        fill: rgb(248 113 113); /* tailwind css red-400 */
+        fill-opacity: 0.35;
     }
 </style>
