@@ -86,27 +86,39 @@
                     </button>
                 </div>
 
-                <div class="flex flex-row my-2">
-                    <svg width="50%" height="25px">
+                <div class="flex flex-row my-2 justify-left align-middle">
+                    <svg width="24px" height="24px" class="mr-1">
+                        <rect 
+                            x="0"
+                            y="0%"
+                            width="24px" 
+                            height="24px"
+                            fill="rgb(52 211 153)"
+                        />
+                    </svg>
+                    <p class="mr-4">Confirmed</p>
+                    <svg y="0%" width="24px" height="24px" class="mr-1">
                         <rect 
                             x="0"
                             y="0"
-                            width="15px" 
-                            height="15px"
+                            width="24px" 
+                            height="24px"
                             fill="rgb(125 211 252)"
+                            stroke-width="2"
+                            stroke="rgb(14 165 233)"
                         />
-                        <text x="10%" y="50%">Human-reviewed frame</text>
                     </svg>
-                    <svg y="40%" width="50%" height="25px">
+                    <p class="mr-4">Unconfirmed (AI-predicted)</p>
+                    <svg y="70%" width="24px" height="24px" class="mr-1">
                         <rect 
                             x="0"
                             y="0"
-                            width="15px" 
-                            height="15px"
-                            fill="rgb(248 113 113)"
+                            width="24px" 
+                            height="24px"
+                            fill="rgb(209 213 219)"
                         />
-                        <text x="10%" y="50%">Predicted frame</text>
                     </svg>
+                    <p class="mr-4">Undetected</p>
                 </div>
 
                 <Timeline />

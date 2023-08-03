@@ -18,10 +18,10 @@
 
     function determineColorFromFrameInfo(labelId, frame) {
         if (frame.labels.find((x) => x === labelId) !== undefined && frame.human_reviewed === false) {
-            return `fill-red-400`;
+            return `fill-sky-300 stroke-sky-500 stroke-2`;
         }
         else if (frame.labels.find((x) => x === labelId) !== undefined) {
-            return `fill-sky-300`;
+            return `fill-emerald-400`;
         }
         else {
             return "fill-gray-300";

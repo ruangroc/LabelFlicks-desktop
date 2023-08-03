@@ -27,7 +27,7 @@
 
 <style>
     rect.bounding-box-label-bg {
-        fill: rgb(3 105 161); /* tailwind css sky-700 */
+        fill: rgb(4 120 87); /* tailwind css emerald-700 */
         fill-opacity: 0.9;
         cursor: pointer;
     }
@@ -39,7 +39,7 @@
         cursor: pointer;
     }
     rect.predicted-label-bg {
-        fill: rgb(185 28 28); /* tailwind css red-700 */
+        fill: rgb(3 105 161); /* tailwind css sky-700 */
         fill-opacity: 0.9;
         cursor: pointer;
     }
