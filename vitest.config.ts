@@ -8,6 +8,10 @@ module.exports = defineConfig(async ({ command, mode }) => {
         include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
         globals: true,
         environment: 'jsdom',
+        coverage: {
+          provider: 'c8',
+          reporter: ['text', 'json', 'html'],
+        },
       },
   }
 });
