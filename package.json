@@ -11,12 +11,14 @@
     "electron:start": "electron .",
     "build": "vite build && electron-builder --publish never",
     "test": "vitest run src",
-    "test:watch": "vitest src"
+    "test:watch": "vitest src",
+    "coverage": "vitest run src --coverage"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.0.3",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/svelte": "^4.0.3",
+    "@vitest/coverage-c8": "^0.33.0",
     "autoprefixer": "^10.4.13",
     "concurrently": "^7.6.0",
     "cross-env": "^7.0.3",
@@ -29,7 +31,7 @@
     "svelte-spa-router": "^3.3.0",
     "tailwindcss": "^3.2.4",
     "vite": "^4.0.0",
-    "vitest": "^0.29.2"
+    "vitest": "^0.30.0"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
