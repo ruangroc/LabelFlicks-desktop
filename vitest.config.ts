@@ -10,7 +10,7 @@ module.exports = defineConfig(async ({ command, mode }) => {
         environment: 'jsdom',
         coverage: {
           provider: 'c8',
-          reporter: ['text', 'json'],
+          reporter: ['json-summary'],
         },
       },
   }
