@@ -86,6 +86,73 @@
                     </button>
                 </div>
 
+                <!-- Legend and explanations for the timeline color scheme -->
+                <div class="mt-2 mb-4 p-1 border-slate-500 border-2 border-solid">
+                    <div class="flex flex-col justify-left align-middle">
+                        <div class="flex flex-row my-1">
+                            <svg width="20px" height="20px" class="mr-1">
+                                <rect 
+                                    x="0"
+                                    y="0"
+                                    width="20px" 
+                                    height="20px"
+                                    fill="rgb(52 211 153)"
+                                />
+                            </svg>
+                            <p class="mr-2 text-sm">Human-reviewed: corrected or confirmed AI prediction</p>
+                        </div>
+                        
+                        <div class="flex flex-row my-1">
+                            <svg width="20px" height="20px" class="mr-1">
+                                <rect 
+                                    x="0"
+                                    y="0"
+                                    width="20px" 
+                                    height="20px"
+                                    fill="rgb(125 211 252)"
+                                    stroke-width="3"
+                                    stroke="rgb(14 165 233)"
+                                />
+                            </svg>
+                            <p class="mr-2 text-sm">Unreviewed: unconfirmed AI label prediction</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="flex flex-row my-2 justify-left align-middle">
+                    <svg width="24px" height="24px" class="mr-1">
+                        <rect 
+                            x="0"
+                            y="0%"
+                            width="24px" 
+                            height="24px"
+                            fill="rgb(52 211 153)"
+                        />
+                    </svg>
+                    <p class="mr-4">Confirmed</p>
+                    <svg y="0%" width="24px" height="24px" class="mr-1">
+                        <rect 
+                            x="0"
+                            y="0"
+                            width="24px" 
+                            height="24px"
+                            fill="rgb(125 211 252)"
+                            stroke-width="2"
+                            stroke="rgb(14 165 233)"
+                        />
+                    </svg>
+                    <p class="mr-4">Unconfirmed (AI-predicted)</p>
+                    <svg y="70%" width="24px" height="24px" class="mr-1">
+                        <rect 
+                            x="0"
+                            y="0"
+                            width="24px" 
+                            height="24px"
+                            fill="rgb(209 213 219)"
+                        />
+                    </svg>
+                    <p class="mr-4">Undetected</p>
+                </div> -->
+
                 <Timeline />
 
                 <CreateLabel bind:showCreateLabelModal />
