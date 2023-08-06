@@ -30,4 +30,4 @@ jobs:
     - run: npm run build --if-present
     - run: npm test --coverage
     - name: Jest Coverage Comment
-        uses: MishaKav/jest-coverage-comment@main
+      uses: MishaKav/jest-coverage-comment@main
