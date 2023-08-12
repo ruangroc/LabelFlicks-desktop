@@ -1,77 +1,37 @@
-# Anita's notes
+# LabelFlicks Desktop Application
+
+The LabelFlicks Desktop Application is the frontend client for the overall LabelFlicks project, which aims to automate the process of converting videos into fully-labeled object detection datasets for training computer vision models.
+
+The LabelFlicks client application presents a streamlined process for creating a project, uploading videos, labeling video frames, and exporting the labels. The labeling screen (pictured below) offers a "video frame player" for flipping through the frames as you would when watching a video with the bounding boxes and predicted labels overlaid on top. The labeling timelines to the right of the screen to navigate between frames and visualize your labeling progress in terms of each label in your project. 
+
+The desktop application was built using Electron and Svelte. The intended backend component can be found in the [video-labeling-backend](https://github.com/ruangroc/video-labeling-backend) repo.
+
+![LabelFlicks Preview](https://github.com/ruangroc/video-labeling-electron/assets/43560455/d50caabf-32b2-471c-8612-44b9d5d7f889)
+
+## Getting Started
+
+1. Make sure you have Node version 18.x: https://nodejs.org/en/download/
+
+2. Install dependencies: `npm install`
+
+3. Start the backend server (see instructions in the [backend repo's README](https://github.com/ruangroc/video-labeling-backend)) or start the mock server: `node mock-server/server.js`
+
+    - Note 1: the mock server is much more limited in what it can demonstrate as the labeling screen is very dynamic and it simply wasn't feasible to mock every possible interaction.
+
+    - Note 2: If you change the ports that are used by the client and the backend use, make sure to also create a .env file and define:
+        ```
+        SVELTE_PORT=<port number>
+        SERVER_PORT=<port number>
+        ```
+
+4. Run the app: `npm run start`
 
 
-## How to build and run
+## Tests
 
-Make sure you have installed Node version 18.x: https://nodejs.org/en/download/
-
-Setting up the first time: `npm install`
-
-* Apparently didn't get all the dependencies the first time, also had to run: `npm install electron` and `npm install --save-dev electron-builder` and `npm install --save-dev cross-env` and `npm install --save-dev concurrently`
-
-* package.json should have everything now though
-
-Build the Svelte stuff: `npm run build`
-
-Run the app: `npm run start`
-
-If running the mock server, run this command in one command line window: `node mock-server/server.js`
-Then run the app in another window.
-
-To run the tests, use: `npm run test`. No mock server required.
-
-If you wish to change the ports that Svelte and the backend use, create a .env file and define:
-
-* `SVELTE_PORT=<port number>`
-* `SERVER_PORT=<port number>`
+To run the tests, simply run: `npm run test`. No mock server is required.
 
 
-# Below are things from the template repo
 
-## Svelte + Vite + Tailwind
 
-This template should help get you started developing with Svelte with Tailwind in Vite.
 
-## Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
-
-## Need an official Svelte framework?
-
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
-
-## Technical considerations
-
-**Why use this over SvelteKit?**
-
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
-
-This template contains as little as possible to get started with Vite + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
-
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `checkJs` in the JS template?**
-
-It is likely that most cases of changing variable types in runtime are likely to be accidental, rather than deliberate. This provides advanced typechecking out of the box. Should you like to take advantage of the dynamically-typed nature of JavaScript, it is trivial to change the configuration.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```js
-// store.js
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
-```
