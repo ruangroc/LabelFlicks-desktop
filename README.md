@@ -1,12 +1,12 @@
 # LabelFlicks Desktop Application
 
-The LabelFlicks Desktop Application is the frontend client for the overall LabelFlicks project, which aims to improve the process of converting videos into fully-labeled object detection datasets for training computer vision models.
+The LabelFlicks Desktop Application is the frontend client for the overall LabelFlicks project, which aims to automate the process of converting videos into fully-labeled object detection datasets for training computer vision models.
 
 The LabelFlicks client application presents a streamlined process for creating a project, uploading videos, labeling video frames, and exporting the labels. The labeling screen (pictured below) offers a "video frame player" for flipping through the frames as you would when watching a video with the bounding boxes and predicted labels overlaid on top. The labeling timelines to the right of the screen to navigate between frames and visualize your labeling progress in terms of each label in your project. 
 
 The desktop application was built using Electron and Svelte. The intended backend component can be found in the [video-labeling-backend](https://github.com/ruangroc/video-labeling-backend) repo.
 
-![Preview of the LabelFlicks labeling screen](./labeling-screen-preview.jpg)
+![LabelFlicks Preview](https://github.com/ruangroc/video-labeling-electron/assets/43560455/d50caabf-32b2-471c-8612-44b9d5d7f889)
 
 ## Getting Started
 
