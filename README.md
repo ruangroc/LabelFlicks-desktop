@@ -6,7 +6,7 @@ The LabelFlicks client application presents a streamlined process for creating a
 
 The desktop application was built using Electron and Svelte. The intended backend component can be found in the [video-labeling-backend](https://github.com/ruangroc/video-labeling-backend) repo.
 
-![LabelFlicks Preview](https://github.com/ruangroc/video-labeling-electron/assets/43560455/d50caabf-32b2-471c-8612-44b9d5d7f889)
+![LabelFlicks Preview](poc_demo.mp4)
 
 ## Getting Started
 
